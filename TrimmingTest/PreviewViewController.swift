@@ -41,6 +41,7 @@ class PreviewViewController: UIViewController {
     // NavigationBarの設定
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
         ]
@@ -68,7 +69,8 @@ class PreviewViewController: UIViewController {
         
         let alert = UIAlertController(title: "保存されました", message: "", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default){ (_) in
-            self.dismiss(animated: true, completion: nil)
+//            self.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: .notifyName, object: nil)
         }
         alert.addAction(okButton)
         self.present(alert, animated: true)

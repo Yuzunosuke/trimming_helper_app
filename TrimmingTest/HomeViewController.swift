@@ -27,6 +27,8 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         configureView()
         configureNavigationBar()
         configureCallPhotoLibraryButton()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissView(notification:)), name: .notifyName, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,6 +50,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
         ]
@@ -65,6 +68,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let picker = UIImagePickerController()
             picker.modalPresentationStyle = UIModalPresentationStyle.popover
             picker.delegate = self
+            picker.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
             picker.sourceType = UIImagePickerController.SourceType.photoLibrary
             
             self.present(picker, animated: true, completion: nil)
@@ -113,5 +117,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         callPhotoLibrary()
     }
     
+    
+    @objc func dismissView(notification: Notification) {
+        dismiss(animated: true, completion: nil)
+    }
 }
 

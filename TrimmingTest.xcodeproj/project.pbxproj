@@ -16,6 +16,7 @@
 		02B2059C224A768900DED682 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059B224A768900DED682 /* MyNavigationController.swift */; };
 		02B2059E224A7A7500DED682 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059D224A7A7500DED682 /* UIImageExtension.swift */; };
 		02B205A0224ACC9E00DED682 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059F224ACC9E00DED682 /* PreviewViewController.swift */; };
+		02B205A2224ADCA500DED682 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A1224ADCA500DED682 /* NotificationExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		02B2059B224A768900DED682 /* MyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		02B2059D224A7A7500DED682 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		02B2059F224ACC9E00DED682 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		02B205A1224ADCA500DED682 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				02B20597224A68B200DED682 /* TrimmingViewController.swift */,
 				02B2059F224ACC9E00DED682 /* PreviewViewController.swift */,
 				02B2059D224A7A7500DED682 /* UIImageExtension.swift */,
+				02B205A1224ADCA500DED682 /* NotificationExtension.swift */,
 				02B20589224A594D00DED682 /* Main.storyboard */,
 				02B2058C224A594F00DED682 /* Assets.xcassets */,
 				02B2058E224A594F00DED682 /* LaunchScreen.storyboard */,
@@ -152,6 +155,7 @@
 				02B20598224A68B200DED682 /* TrimmingViewController.swift in Sources */,
 				02B2059E224A7A7500DED682 /* UIImageExtension.swift in Sources */,
 				02B20586224A594D00DED682 /* AppDelegate.swift in Sources */,
+				02B205A2224ADCA500DED682 /* NotificationExtension.swift in Sources */,
 				02B205A0224ACC9E00DED682 /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
