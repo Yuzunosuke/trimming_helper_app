@@ -18,22 +18,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qu-Ri-LxI">
-                                <rect key="frame" x="109" y="325" width="159" height="28"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qu-Ri-LxI">
+                                <rect key="frame" x="59" y="114" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="16"/>
-                                <state key="normal" title="タップして画像を選択"/>
+                                <state key="normal" image="photoIcon"/>
                                 <connections>
                                     <action selector="callPhotoLibraryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d9G-Bb-JyC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Kh-a5-Yvg">
+                                <rect key="frame" x="59" y="341" width="256" height="256"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="cameraIcon"/>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.090196078431372548" green="0.090196078431372548" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="ホーム" id="hyd-hq-dvu"/>
                     <connections>
                         <outlet property="callPhotoLibraryButton" destination="2Qu-Ri-LxI" id="qfz-SU-DPb"/>
+                        <outlet property="cameraButton" destination="9Kh-a5-Yvg" id="bDj-jv-Arc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -149,4 +154,8 @@
             <point key="canvasLocation" x="4308" y="125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cameraIcon" width="256" height="256"/>
+        <image name="photoIcon" width="256" height="256"/>
+    </resources>
 </document>

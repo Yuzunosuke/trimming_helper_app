@@ -23,7 +23,6 @@ class PreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureView()
         configureNavigationBar()
         createImageView()
     }
@@ -31,19 +30,12 @@ class PreviewViewController: UIViewController {
     
     
     // MARK: private function
-    
-    // Viewそのものの設定
-    private func configureView() {
-        view.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
-    }
-    
-    
+
     // NavigationBarの設定
     private func configureNavigationBar() {
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
+            .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         ]
     }
     

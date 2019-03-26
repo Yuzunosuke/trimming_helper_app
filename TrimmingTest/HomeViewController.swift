@@ -14,6 +14,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     // MARK: property
     
     @IBOutlet weak var callPhotoLibraryButton: UIButton!
+    @IBOutlet weak var cameraButton: UIButton!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -24,7 +25,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         // Do any additional setup after loading the view, typically from a nib.
         
         self.setNeedsStatusBarAppearanceUpdate()
-        configureView()
         configureNavigationBar()
         configureCallPhotoLibraryButton()
         
@@ -40,25 +40,31 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     private func configureCallPhotoLibraryButton() {
         callPhotoLibraryButton.translatesAutoresizingMaskIntoConstraints = false
-        callPhotoLibraryButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        callPhotoLibraryButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        callPhotoLibraryButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        callPhotoLibraryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        callPhotoLibraryButton.widthAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        callPhotoLibraryButton.heightAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        callPhotoLibraryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        callPhotoLibraryButton.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -16).isActive = true
         
-        callPhotoLibraryButton.tintColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
+        callPhotoLibraryButton.layer.borderColor = UIColor.white.cgColor
+    }
+    
+    private func configureCameraButton() {
+        cameraButton.translatesAutoresizingMaskIntoConstraints = false
+        cameraButton.widthAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        cameraButton.heightAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        cameraButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cameraButton.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 16).isActive = true
+        
+        cameraButton.layer.borderColor = UIColor.white.cgColor
     }
     
     private func configureNavigationBar() {
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
+            .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         ]
     }
     
-    private func configureView() {
-        view.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
-    }
     
     private func callPhotoLibrary() {
         requestPhotoAuthorizationOn()
