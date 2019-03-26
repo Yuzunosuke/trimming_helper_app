@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2Yg-Y9-7Ja">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--ホーム-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qu-Ri-LxI">
+                                <rect key="frame" x="109" y="325" width="159" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="16"/>
+                                <state key="normal" title="タップして画像を選択"/>
+                                <connections>
+                                    <action selector="callPhotoLibraryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d9G-Bb-JyC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.090196078431372548" green="0.090196078431372548" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="ホーム" id="hyd-hq-dvu"/>
+                    <connections>
+                        <outlet property="callPhotoLibraryButton" destination="2Qu-Ri-LxI" id="qfz-SU-DPb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="980" y="124.58770614692655"/>
+        </scene>
+        <!--トリミング-->
+        <scene sceneID="Atq-2l-wNR">
+            <objects>
+                <viewController storyboardIdentifier="trimmingVC" id="3eP-Jv-h8I" customClass="TrimmingViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="85j-gb-5Wf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="mZw-Tx-CPk"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="トリミング" id="R2r-rT-Go2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pPB-UV-2HZ">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="3eP-Jv-h8I" id="yGt-Rh-xLG"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Trim" id="kyQ-U7-xmk">
+                            <connections>
+                                <action selector="savePhotoButton:" destination="3eP-Jv-h8I" id="cLl-XE-3P9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="37E-17-oRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3032.8000000000002" y="124.58770614692655"/>
+        </scene>
+        <!--プレビュー-->
+        <scene sceneID="8Mu-rK-PwQ">
+            <objects>
+                <viewController id="1uk-qE-DUi" customClass="PreviewViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RTI-9j-jnL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Wag-42-yyT"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="プレビュー" id="4Fi-a0-9Mo">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yn5-7o-RIt">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="1uk-qE-DUi" id="SzK-74-Ysp"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Oev-bJ-1HO">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="1uk-qE-DUi" id="BAE-Dh-6AG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aiO-iz-CBV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5278" y="125"/>
+        </scene>
+        <!--My Navigation Controller-->
+        <scene sceneID="4wJ-pN-dAW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Yg-Y9-7Ja" customClass="MyNavigationController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AwR-Ap-KiE">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="RLh-Zv-Gdd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ClZ-ww-n7x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="40.799999999999997" y="124.58770614692655"/>
+        </scene>
+        <!--My Navigation Controller-->
+        <scene sceneID="waq-Gj-4cq">
+            <objects>
+                <navigationController storyboardIdentifier="trimmingNavigationContoller" automaticallyAdjustsScrollViewInsets="NO" id="fLO-ak-f2q" customClass="MyNavigationController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZCj-fy-7jC">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3eP-Jv-h8I" kind="relationship" relationship="rootViewController" id="GGH-cU-aKQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4FD-3x-xsr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2093.5999999999999" y="124.58770614692655"/>
+        </scene>
+        <!--My Navigation Controller-->
+        <scene sceneID="sWx-L3-x9w">
+            <objects>
+                <navigationController storyboardIdentifier="previewNavigationContoller" automaticallyAdjustsScrollViewInsets="NO" id="8yn-o4-2rA" customClass="MyNavigationController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="d6P-j8-dTd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1uk-qE-DUi" kind="relationship" relationship="rootViewController" id="5ad-16-bD9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IDh-0P-E9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4308" y="125"/>
+        </scene>
+    </scenes>
+</document>
