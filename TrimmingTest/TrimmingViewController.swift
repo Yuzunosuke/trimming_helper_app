@@ -19,9 +19,10 @@ class TrimmingViewController: UIViewController {
     var imageView = UIImageView()
     var scaleZoomedInOut: CGFloat = 1.0
     @IBOutlet weak var gridCollectionView: UICollectionView!
-    var iconNameArray = ["goldenSpiral", "goldenGrid", "3divisionGrid", "goldenDiagonal"]
-    var iconImageNameArray = ["goldenSpiralIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon"]
+    var iconNameArray = ["goldenSpiral", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid"]
+    var iconImageNameArray = ["goldenSpiralIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon"]
     var iconImageArray = [UIImage]()
+    
     
     
     // MARK: override function
@@ -42,12 +43,14 @@ class TrimmingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        // AppDelegateからイメージをとりImageViewに入れる
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         image = appDelegate.photoLibraryImage
         createImageView(sourceImage: image)
     }
     
     
+    // 画面をタッチするとその間写真が動かせる
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let aTouch: UITouch = touches.first!
         
@@ -63,10 +66,10 @@ class TrimmingViewController: UIViewController {
     }
     
     
+    // 画面へのタッチを終えると画像の位置判定を行い、必要なら空白を埋める動きをする
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         moveImageViewToFillBlank()
-        
     }
     
     
@@ -95,6 +98,8 @@ class TrimmingViewController: UIViewController {
         gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
+    
+    // gridViewの更新
     private func updateGridView(iconName: String){
         gridView.removeFromSuperview()
         createGridView(imageName: iconName)
@@ -127,12 +132,15 @@ class TrimmingViewController: UIViewController {
         
     }
     
+    
+    // ImageViewの更新
     private func updateImageView(){
         imageView.removeFromSuperview()
         createImageView(sourceImage: image)
     }
     
     
+    // gridViewのアイコンを表示するcollectionViewの設定
     private func configureCollectionView() {
         gridCollectionView.register(GridCollectionViewCell.self, forCellWithReuseIdentifier: "GridCollectionViewCell")
         
@@ -151,18 +159,12 @@ class TrimmingViewController: UIViewController {
     }
     
     
+    // gridのアイコンの画像を格納する配列の設定
     private func configureIconArray() {
-        
         for iconName in iconImageNameArray {
             guard let gridImage = UIImage(named: iconName) else { return }
             iconImageArray.append(gridImage)
         }
-        
-//        guard let goldenSpiral = UIImage(named: "goldenSpiralIcon") else { return }
-//        iconImageArray.append(goldenSpiral)
-//
-//        guard let goldenGrid = UIImage(named: "goldenGridIcon") else { return }
-//        iconImageArray.append(goldenGrid)
     }
     
     
@@ -189,6 +191,7 @@ class TrimmingViewController: UIViewController {
     }
     
     
+    // ピンチジェスチャーの設定
     private func setUpPinchInOut() {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(gesture:)))
         pinchGesture.delegate = self as? UIGestureRecognizerDelegate
@@ -234,6 +237,7 @@ class TrimmingViewController: UIViewController {
     
     // MARK: Action
     
+    // Trimボタンが押されたらトリミングした画像をPreviewViewControllerに送る
     @IBAction func savePhotoButton(_ sender: UIBarButtonItem) {
         if let trimmingRect = makeTrimmingRect(targetImageView: imageView, trimmingAreaView: gridView) {
             image = image.trimming(to: trimmingRect, zoomedInOutScale: scaleZoomedInOut)
@@ -248,6 +252,7 @@ class TrimmingViewController: UIViewController {
     }
     
     
+    // cancelボタンの動き
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
