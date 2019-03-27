@@ -15,10 +15,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @IBOutlet weak var callPhotoLibraryButton: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

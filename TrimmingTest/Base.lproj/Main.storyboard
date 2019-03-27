@@ -30,6 +30,9 @@
                                 <rect key="frame" x="59" y="341" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="cameraIcon"/>
+                                <connections>
+                                    <segue destination="w0k-1j-bgh" kind="presentation" id="8aL-uh-aBE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -43,7 +46,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="980" y="124.58770614692655"/>
+            <point key="canvasLocation" x="1055" y="546"/>
         </scene>
         <!--トリミング-->
         <scene sceneID="Atq-2l-wNR">
@@ -52,6 +55,20 @@
                     <view key="view" contentMode="scaleToFill" id="85j-gb-5Wf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HNb-pf-63a">
+                                <rect key="frame" x="0.0" y="616" width="375" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="awV-ur-5jf">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="mZw-Tx-CPk"/>
                     </view>
@@ -67,6 +84,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="gridCollectionView" destination="HNb-pf-63a" id="ydI-ht-7Oi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37E-17-oRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -115,7 +135,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ClZ-ww-n7x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="40.799999999999997" y="124.58770614692655"/>
+            <point key="canvasLocation" x="50" y="546"/>
         </scene>
         <!--My Navigation Controller-->
         <scene sceneID="waq-Gj-4cq">
@@ -152,6 +172,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDh-0P-E9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4308" y="125"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="u2e-2M-oun">
+            <objects>
+                <viewController id="w0k-1j-bgh" customClass="CameraViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VdD-Au-LTa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4f-BR-y1z">
+                                <rect key="frame" x="172" y="566" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="shutterButtonTapped:" destination="w0k-1j-bgh" eventType="touchUpInside" id="zgq-XO-Hxw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="bp0-XS-bgP"/>
+                    </view>
+                    <connections>
+                        <outlet property="shutterButton" destination="t4f-BR-y1z" id="ymW-sZ-qbF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="miy-if-hFE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3033" y="985"/>
         </scene>
     </scenes>
     <resources>

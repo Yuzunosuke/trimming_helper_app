@@ -17,6 +17,8 @@
 		02B2059E224A7A7500DED682 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059D224A7A7500DED682 /* UIImageExtension.swift */; };
 		02B205A0224ACC9E00DED682 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059F224ACC9E00DED682 /* PreviewViewController.swift */; };
 		02B205A2224ADCA500DED682 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A1224ADCA500DED682 /* NotificationExtension.swift */; };
+		02B205A5224B35D300DED682 /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */; };
+		02B205A8224B666600DED682 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A7224B666600DED682 /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		02B2059D224A7A7500DED682 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		02B2059F224ACC9E00DED682 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		02B205A1224ADCA500DED682 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
+		02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
+		02B205A7224B666600DED682 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				02B20587224A594D00DED682 /* HomeViewController.swift */,
 				02B20597224A68B200DED682 /* TrimmingViewController.swift */,
 				02B2059F224ACC9E00DED682 /* PreviewViewController.swift */,
+				02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */,
+				02B205A7224B666600DED682 /* CameraViewController.swift */,
 				02B2059D224A7A7500DED682 /* UIImageExtension.swift */,
 				02B205A1224ADCA500DED682 /* NotificationExtension.swift */,
 				02B20589224A594D00DED682 /* Main.storyboard */,
@@ -154,9 +160,11 @@
 				02B2059C224A768900DED682 /* MyNavigationController.swift in Sources */,
 				02B20598224A68B200DED682 /* TrimmingViewController.swift in Sources */,
 				02B2059E224A7A7500DED682 /* UIImageExtension.swift in Sources */,
+				02B205A5224B35D300DED682 /* GridCollectionViewCell.swift in Sources */,
 				02B20586224A594D00DED682 /* AppDelegate.swift in Sources */,
 				02B205A2224ADCA500DED682 /* NotificationExtension.swift in Sources */,
 				02B205A0224ACC9E00DED682 /* PreviewViewController.swift in Sources */,
+				02B205A8224B666600DED682 /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

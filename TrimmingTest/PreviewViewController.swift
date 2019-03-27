@@ -13,10 +13,7 @@ class PreviewViewController: UIViewController {
     // MARK: property
     
     let imageView = UIImageView()
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     
     // MARK: override function
 
@@ -43,6 +40,8 @@ class PreviewViewController: UIViewController {
     // imageViewの設定
     private func createImageView() {
         view.addSubview(imageView)
+        
+        imageView.contentMode = .scaleAspectFill
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
