@@ -372,8 +372,14 @@ extension TrimmingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item <= iconNameArray.count-1 {    // Gridアイコンをタップした時
-            selectedIconName = iconNameArray[indexPath.item]
-            updateGridView(iconName: selectedIconName)
+            
+            if selectedIconName == iconNameArray[indexPath.item] {  // 複数回同じアイコンをタップした時
+                gridViewAngle += 90
+                updateGridView(iconName: selectedIconName)
+            } else {
+                selectedIconName = iconNameArray[indexPath.item]
+                updateGridView(iconName: selectedIconName)
+            }
         } else {                                        // 回転アイコンをタップした時
             gridViewAngle += 90
             updateGridView(iconName: selectedIconName)
