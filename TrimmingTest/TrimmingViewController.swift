@@ -19,9 +19,20 @@ class TrimmingViewController: UIViewController {
     var imageView = UIImageView()
     var scaleZoomedInOut: CGFloat = 1.0
     @IBOutlet weak var gridCollectionView: UICollectionView!
-    var iconNameArray = ["goldenSpiral", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid"]
-    var iconImageNameArray = ["goldenSpiralIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon"]
+    var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid"]
+    var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon", "rotationGridIcon"]
     var iconImageArray = [UIImage]()
+    var selectedIconName = "goldenSpiral"
+    var gridViewConstraints: [NSLayoutConstraint] = []
+    var gridViewAngle = 0 {
+        didSet {
+            if gridViewAngle == 360 {
+                gridViewAngle = 0
+            }
+            print(gridViewAngle)
+//            gridView.image = UIImage(named: selectedIconName + String(gridViewAngle))
+        }
+    }
     
     
     
@@ -87,15 +98,48 @@ class TrimmingViewController: UIViewController {
     
     // gridViewの作成
     private func createGridView(imageName: String) {
-        gridView.image = UIImage(named: imageName)
+        
+        var gridImageName = ""
+        if gridViewAngle == 0 {
+            gridImageName = imageName
+        } else {
+            gridImageName = imageName + String(gridViewAngle)
+        }
+        
+        gridView.image = UIImage(named: gridImageName)
         
         view.addSubview(gridView)
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
-        gridView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        gridView.heightAnchor.constraint(equalToConstant: view.frame.width / 1.5).isActive = true
-        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        configureGridViewConstraints()
+        
+        gridView.contentMode = .scaleAspectFit
+    }
+    
+    
+    // gridViewの制約の設定
+    private func configureGridViewConstraints() {
+        NSLayoutConstraint.deactivate(gridViewConstraints)
+        gridViewConstraints.removeAll()
+        
+        if gridViewAngle == 0 || gridViewAngle == 180 {
+            gridViewConstraints = [
+                gridView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 / 1.5),
+                gridView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9)
+            ]
+        }
+        
+        if gridViewAngle == 90 || gridViewAngle == 270 {
+            gridViewConstraints = [
+                gridView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5),
+                gridView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9)
+            ]
+        }
+        
+        gridViewConstraints.append(gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+        gridViewConstraints.append(gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor))
+        
+        NSLayoutConstraint.activate(gridViewConstraints)
     }
     
     
@@ -184,7 +228,7 @@ class TrimmingViewController: UIViewController {
         height = trimmingAreaView.frame.size.height
 
         //trimmingRectの座標を決定
-        trimmingX = -deltaX
+        trimmingX = trimmingAreaView.frame.origin.x - deltaX
         trimmingY = trimmingAreaView.frame.origin.y - deltaY
         
         return CGRect(x: trimmingX, y: trimmingY, width: width, height: height)
@@ -309,7 +353,7 @@ class TrimmingViewController: UIViewController {
 extension TrimmingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return iconNameArray.count
+        return iconImageNameArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -327,6 +371,15 @@ extension TrimmingViewController: UICollectionViewDataSource {
 
 extension TrimmingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        updateGridView(iconName: iconNameArray[indexPath.item])
+        
+        if indexPath.item <= iconNameArray.count-1 {    // Gridアイコンをタップした時
+            selectedIconName = iconNameArray[indexPath.item]
+            updateGridView(iconName: selectedIconName)
+            print("### ", selectedIconName)
+        } else {                                        // 回転アイコンをタップした時
+            print("### rotation")
+            gridViewAngle += 90
+            updateGridView(iconName: selectedIconName)
+        }
     }
 }

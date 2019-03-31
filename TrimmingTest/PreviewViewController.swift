@@ -22,6 +22,7 @@ class PreviewViewController: UIViewController {
 
         configureNavigationBar()
         createImageView()
+        imageView.contentMode = .scaleAspectFit
     }
     
     
@@ -44,8 +45,8 @@ class PreviewViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: view.frame.width / 1.618).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
