@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024D9D4B22511CBA00061EE9 /* CGRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9D4A22511CBA00061EE9 /* CGRect+Center.swift */; };
 		02B20586224A594D00DED682 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B20585224A594D00DED682 /* AppDelegate.swift */; };
 		02B20588224A594D00DED682 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B20587224A594D00DED682 /* HomeViewController.swift */; };
 		02B2058B224A594D00DED682 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02B20589224A594D00DED682 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		024D9D4A22511CBA00061EE9 /* CGRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Center.swift"; sourceTree = "<group>"; };
 		02B20582224A594D00DED682 /* TrimmingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrimmingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02B20585224A594D00DED682 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02B20587224A594D00DED682 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */,
 				02B205A7224B666600DED682 /* CameraViewController.swift */,
 				02B2059D224A7A7500DED682 /* UIImageExtension.swift */,
+				024D9D4A22511CBA00061EE9 /* CGRect+Center.swift */,
 				02B205A1224ADCA500DED682 /* NotificationExtension.swift */,
 				02B20589224A594D00DED682 /* Main.storyboard */,
 				02B2058C224A594F00DED682 /* Assets.xcassets */,
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				024D9D4B22511CBA00061EE9 /* CGRect+Center.swift in Sources */,
 				02B20588224A594D00DED682 /* HomeViewController.swift in Sources */,
 				02B2059C224A768900DED682 /* MyNavigationController.swift in Sources */,
 				02B20598224A68B200DED682 /* TrimmingViewController.swift in Sources */,

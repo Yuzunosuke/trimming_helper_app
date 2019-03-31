@@ -37,6 +37,7 @@ class CameraViewController: UIViewController {
         
         captureSession.startRunning()
         
+        configureNavigationBar()
         configureShutterButton()
         
         
@@ -105,9 +106,17 @@ class CameraViewController: UIViewController {
         self.cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        self.cameraPreviewLayer?.frame = view.frame
+        self.cameraPreviewLayer?.frame = CGRect(x: 0, y: 0, width: view.frame.width * 0.9, height: view.frame.width * 0.9 * 1.5).with(center: CGPoint(x: self.view.center.x, y: self.view.center.y))
         self.view.layer.insertSublayer(self.cameraPreviewLayer!, at: 0)
         
+    }
+    
+    
+    private func configureNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        ]
     }
     
     
@@ -121,7 +130,7 @@ class CameraViewController: UIViewController {
         shutterButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         shutterButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         shutterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        shutterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        shutterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
     }
     
     
@@ -134,6 +143,11 @@ class CameraViewController: UIViewController {
         settings.isAutoStillImageStabilizationEnabled = true
         
         self.photoOutput?.capturePhoto(with: settings, delegate: self as AVCapturePhotoCaptureDelegate)
+    }
+    
+    
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     
@@ -154,6 +168,7 @@ class CameraViewController: UIViewController {
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     
+    // 撮影完了時に呼ばれる処理
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {
             let image = UIImage(data: imageData)
