@@ -29,8 +29,6 @@ class TrimmingViewController: UIViewController {
             if gridViewAngle == 360 {
                 gridViewAngle = 0
             }
-            print(gridViewAngle)
-//            gridView.image = UIImage(named: selectedIconName + String(gridViewAngle))
         }
     }
     
@@ -271,7 +269,7 @@ class TrimmingViewController: UIViewController {
         }
         
         // 右が余ってる時
-        if self.gridView.frame.width - self.imageView.frame.maxX > 0 {
+        if self.gridView.frame.origin.x + self.gridView.frame.width - self.imageView.frame.maxX > 0 {
             UIView.animate(withDuration: 0.3) {
                 self.imageView.frame.origin.x += self.gridView.frame.maxX - self.imageView.frame.maxX
             }
@@ -370,16 +368,16 @@ extension TrimmingViewController: UICollectionViewDataSource {
 
 
 extension TrimmingViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item <= iconNameArray.count-1 {    // Gridアイコンをタップした時
             selectedIconName = iconNameArray[indexPath.item]
             updateGridView(iconName: selectedIconName)
-            print("### ", selectedIconName)
         } else {                                        // 回転アイコンをタップした時
-            print("### rotation")
             gridViewAngle += 90
             updateGridView(iconName: selectedIconName)
         }
     }
+    
 }
