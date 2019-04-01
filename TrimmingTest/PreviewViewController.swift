@@ -61,7 +61,6 @@ class PreviewViewController: UIViewController {
         
         let alert = UIAlertController(title: "保存されました", message: "", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default){ (_) in
-//            self.dismiss(animated: true, completion: nil)
             NotificationCenter.default.post(name: .notifyName, object: nil)
         }
         alert.addAction(okButton)

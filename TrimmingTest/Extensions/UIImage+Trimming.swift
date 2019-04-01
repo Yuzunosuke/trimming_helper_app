@@ -1,5 +1,5 @@
 //
-//  UIImageExtension.swift
+//  UIImage+Trimming.swift
 //  TrimmingTest
 //
 //  Created by 堺雄之介 on 2019/03/27.

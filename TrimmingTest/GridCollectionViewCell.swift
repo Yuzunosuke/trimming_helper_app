@@ -30,8 +30,6 @@ class GridCollectionViewCell: UICollectionViewCell {
         iconImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
         iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
-//        iconImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-//        iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
 
 }
