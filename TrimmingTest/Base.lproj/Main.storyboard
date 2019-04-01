@@ -188,6 +188,18 @@
                                     <action selector="shutterButtonTapped:" destination="w0k-1j-bgh" eventType="touchUpInside" id="zgq-XO-Hxw"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4xZ-G8-jxM">
+                                <rect key="frame" x="0.0" y="616" width="160" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XXN-Du-r21">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="bp0-XS-bgP"/>
@@ -200,12 +212,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="gridCollectionView" destination="4xZ-G8-jxM" id="2xW-uB-Lkr"/>
                         <outlet property="shutterButton" destination="t4f-BR-y1z" id="ymW-sZ-qbF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="miy-if-hFE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3033" y="985"/>
+            <point key="canvasLocation" x="3032.8000000000002" y="984.55772113943033"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="d4b-ZE-QgP">

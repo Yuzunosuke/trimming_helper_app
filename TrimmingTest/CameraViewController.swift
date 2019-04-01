@@ -23,6 +23,21 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var shutterButton: UIButton!
     
+    @IBOutlet weak var gridCollectionView: UICollectionView!
+    
+    var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid"]
+    var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon"]
+    var iconImageArray = [UIImage]()
+    var selectedIconName = "goldenSpiral"
+    
+    let gridView = UIImageView()
+    var gridViewAngle = 90 {
+        didSet {
+            if gridViewAngle == 450 {
+                gridViewAngle = 90
+            }
+        }
+    }
     
     
     // MARK: override function
@@ -39,6 +54,9 @@ class CameraViewController: UIViewController {
         
         configureNavigationBar()
         configureShutterButton()
+        configureCollectionView()
+        configureIconArray()
+        createGridView(imageName: iconNameArray[0])
         
         
         let action = #selector(orientationChanged(_:))
@@ -134,6 +152,61 @@ class CameraViewController: UIViewController {
     }
     
     
+    // gridViewのアイコンを表示するcollectionViewの設定
+    private func configureCollectionView() {
+        gridCollectionView.register(GridCollectionViewCell.self, forCellWithReuseIdentifier: "GridCollectionViewCell")
+        
+        gridCollectionView.delegate = self
+        gridCollectionView.dataSource = self
+        
+        gridCollectionView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+        
+        view.bringSubviewToFront(gridCollectionView)
+        
+        gridCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        gridCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        gridCollectionView.leftAnchor.constraint(equalTo: shutterButton.rightAnchor, constant: 8).isActive = true
+        gridCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -view.frame.width * 0.05).isActive = true
+        gridCollectionView.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor).isActive = true
+//        gridCollectionView.layer.borderColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1).cgColor
+//        gridCollectionView.layer.borderWidth = 1
+    }
+    
+    
+    private func configureIconArray() {
+        for iconName in iconImageNameArray {
+            guard let gridImage = UIImage(named: iconName) else { return }
+            iconImageArray.append(gridImage)
+        }
+    }
+    
+    
+    // gridViewの作成
+    private func createGridView(imageName: String) {
+
+        let gridImageName = imageName + String(gridViewAngle)
+        
+        gridView.image = UIImage(named: gridImageName)
+        
+        view.addSubview(gridView)
+        
+        gridView.translatesAutoresizingMaskIntoConstraints = false
+        gridView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
+        gridView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
+        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        gridView.contentMode = .scaleAspectFit
+    }
+    
+    
+    // gridViewの更新
+    private func updateGridView(iconName: String){
+        gridView.removeFromSuperview()
+        createGridView(imageName: iconName)
+    }
+    
+    
     
     // MARK: Action
     
@@ -180,6 +253,42 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             self.present(nextVC, animated: true)
 
         }
+    }
+    
+}
+
+
+extension CameraViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return iconImageNameArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionViewCell", for: indexPath) as! GridCollectionViewCell
+        
+        cell.configureConstraints()
+        cell.iconImageView.image = iconImageArray[indexPath.item]
+        
+        return cell
+    }
+    
+    
+}
+
+
+extension CameraViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     
+        if selectedIconName == iconNameArray[indexPath.item] {  // 複数回同じアイコンをタップした時
+            gridViewAngle += 180
+            updateGridView(iconName: selectedIconName)
+        } else {
+            selectedIconName = iconNameArray[indexPath.item]
+            updateGridView(iconName: selectedIconName)
+        }
+        
     }
     
 }

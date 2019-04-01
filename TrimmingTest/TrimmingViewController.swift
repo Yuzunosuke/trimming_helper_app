@@ -20,7 +20,7 @@ class TrimmingViewController: UIViewController {
     var scaleZoomedInOut: CGFloat = 1.0
     @IBOutlet weak var gridCollectionView: UICollectionView!
     var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid"]
-    var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon", "rotationGridIcon"]
+    var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon"]
     var iconImageArray = [UIImage]()
     var selectedIconName = "goldenSpiral"
     var gridViewConstraints: [NSLayoutConstraint] = []
@@ -371,19 +371,14 @@ extension TrimmingViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if indexPath.item <= iconNameArray.count-1 {    // Gridアイコンをタップした時
-            
-            if selectedIconName == iconNameArray[indexPath.item] {  // 複数回同じアイコンをタップした時
-                gridViewAngle += 90
-                updateGridView(iconName: selectedIconName)
-            } else {
-                selectedIconName = iconNameArray[indexPath.item]
-                updateGridView(iconName: selectedIconName)
-            }
-        } else {                                        // 回転アイコンをタップした時
+        if selectedIconName == iconNameArray[indexPath.item] {  // 複数回同じアイコンをタップした時
             gridViewAngle += 90
             updateGridView(iconName: selectedIconName)
+        } else {
+            selectedIconName = iconNameArray[indexPath.item]
+            updateGridView(iconName: selectedIconName)
         }
+
     }
     
 }
