@@ -207,6 +207,29 @@ class CameraViewController: UIViewController {
     }
     
     
+    // 切り取る範囲と座標を決める
+    private func makeTrimmingRect(targetImageView: UIImageView, trimmingAreaView: UIView) -> CGRect?{
+        
+        var width = CGFloat()
+        var height = CGFloat()
+        var trimmingX = CGFloat()
+        var trimmingY = CGFloat()
+        
+        let deltaX = targetImageView.frame.origin.x
+        let deltaY = targetImageView.frame.origin.y
+        
+        // trimmingRectの大きさを決定
+        width = trimmingAreaView.frame.size.width
+        height = trimmingAreaView.frame.size.height
+        
+        //trimmingRectの座標を決定
+        trimmingX = trimmingAreaView.frame.origin.x - deltaX
+        trimmingY = trimmingAreaView.frame.origin.y - deltaY
+        
+        return CGRect(x: trimmingX, y: trimmingY, width: width, height: height)
+    }
+    
+    
     
     // MARK: Action
     
@@ -245,12 +268,47 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {
             let image = UIImage(data: imageData)
+//            var trimmedImage = UIImage()
             
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.photoLibraryImage = image
+            // うまくいかない
+//            let imageViewScale = view.frame.height / gridView.frame.height
             
-            let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
-            self.present(nextVC, animated: true)
+            let cropRect: CGRect = CGRect(x: gridView.frame.origin.x - cameraPreviewLayer!.frame.origin.x,
+                                          y: gridView.frame.origin.y - cameraPreviewLayer!.frame.origin.y,
+                                          width: gridView.frame.width,
+                                          height: gridView.frame.height)
+            
+            print("### cropの範囲", cropRect)
+            print("### gridViewの範囲", gridView.frame)
+            
+//            if let trimmedImage = image?.cgImage?.cropping(to: cropRect) {
+//
+//                print("### ", trimmedImage)
+//                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//                appDelegate.photoLibraryImage = UIImage(cgImage: trimmedImage, scale: 1.0, orientation: image!.imageOrientation)
+//
+//                let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
+//                self.present(nextVC, animated: true)
+//            }
+            
+            if let trimmedImage = image?.trimming(to: cropRect, zoomedInOutScale: 1.0) {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.photoLibraryImage = trimmedImage
+                
+                let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
+                self.present(nextVC, animated: true)
+            }
+            
+            
+            // ここまで
+            
+            
+            // これならうまく行くけど比率はおかしい
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            appDelegate.photoLibraryImage = image
+//
+//            let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
+//            self.present(nextVC, animated: true)
 
         }
     }

@@ -280,7 +280,7 @@ class TrimmingViewController: UIViewController {
     // MARK: Action
     
     // Trimボタンが押されたらトリミングした画像をPreviewViewControllerに送る
-    @IBAction func savePhotoButton(_ sender: UIBarButtonItem) {
+    @IBAction func trimButtonTapped(_ sender: UIBarButtonItem) {
         if let trimmingRect = makeTrimmingRect(targetImageView: imageView, trimmingAreaView: gridView) {
             image = image.trimming(to: trimmingRect, zoomedInOutScale: scaleZoomedInOut)
 
