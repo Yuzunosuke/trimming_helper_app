@@ -2,131 +2,121 @@
 //  CameraViewController.swift
 //  TrimmingTest
 //
-//  Created by 堺雄之介 on 2019/03/27.
+//  Created by 堺雄之介 on 2019/04/05.
 //  Copyright © 2019 Yunosuke Sakai. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
+import Photos
 
 class CameraViewController: UIViewController {
     
     
-    // MARK: property
-    
-    var captureSession = AVCaptureSession()
-    var mainCamera: AVCaptureDevice?
-    var innerCamera: AVCaptureDevice?
-    var currentDevice: AVCaptureDevice?
-    var photoOutput: AVCapturePhotoOutput?
-    var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
-    
-    @IBOutlet weak var shutterButton: UIButton!
-    
-    @IBOutlet weak var gridCollectionView: UICollectionView!
-    
-    var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid", "diagonalGrid"]
-    var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon", "diagonalGridIcon"]
-    var iconImageArray = [UIImage]()
-    var selectedIconName = "goldenSpiral"
-    
-    let gridView = UIImageView()
-    var gridViewAngle = 90 {
-        didSet {
-            if gridViewAngle == 450 {
-                gridViewAngle = 90
-            }
-        }
-    }
-    
-    
-    // MARK: override function
-    
+    // MARK: View Controller Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        shutterButton.isEnabled = false
         
-        setupCaptureSession()
-        setupCameraDevice()
-        setupInputOutput()
-        setupPreviewLayer()
+        previewView.session = session
         
-        captureSession.startRunning()
+        
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            break
+        case .notDetermined:
+            sessionQueue.suspend()
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if !granted {
+                    self.setupResult = .notAuthorized
+                }
+                self.sessionQueue.resume()
+            }
+        default:
+            setupResult = .notAuthorized
+        }
+        
+        sessionQueue.async {
+            self.configureSession()
+        }
         
         configureNavigationBar()
         configureShutterButton()
         configureCollectionView()
         configureIconArray()
         createGridView(imageName: iconNameArray[0])
+        configurePreviewView()
         
-        
-        let action = #selector(orientationChanged(_:))
-        let center = NotificationCenter.default
-        let name = UIDevice.orientationDidChangeNotification
-        center.addObserver(self, selector: action, name: name, object: nil)
-
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    
-    // MARK: private function
-    
-    private func setupCaptureSession() {
-        captureSession.sessionPreset = .photo
-    }
-    
-    
-    private func setupCameraDevice() {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera],
-                                                                      mediaType: .video,
-                                                                      position: AVCaptureDevice.Position.unspecified)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        let devices = deviceDiscoverySession.devices
-        
-        for device in devices {
-            if device.position == .back {
-                mainCamera = device
-            } else if device.position == .front {
-                innerCamera = device
-            }
-        }
-        
-        currentDevice = mainCamera
-    }
-    
-    
-    private func setupInputOutput() {
-        do {
-            let captureDeviceInput = try AVCaptureDeviceInput(device: currentDevice!)
+        sessionQueue.async {
             
-            if captureSession.canAddInput(captureDeviceInput) {
-                captureSession.addInput(captureDeviceInput)
-            }
-            
-            photoOutput = AVCapturePhotoOutput()
-            
-            photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecType.jpeg])], completionHandler: nil)
-            
-            if captureSession.canAddOutput(photoOutput!) {
-                captureSession.addOutput(photoOutput!)
+            switch self.setupResult {
+            case .success:
+                self.addObservers()
+                self.session.startRunning()
+                self.isSessionRunning = self.session.isRunning
+                
+            case .notAuthorized:
+                DispatchQueue.main.async {
+                    let changePrivacySetting = "AppNAME doesn't have permission to use the camera, please change privacy settings"
+                    let message = NSLocalizedString(changePrivacySetting, comment: "カメラアクセスを拒否した時のアラートメッセージ")
+                    let alertController = UIAlertController(title: "アプリ名", message: message, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK button"),
+                                                            style: .cancel,
+                                                            handler: nil))
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "button to open settings"),
+                                                            style: .default,
+                                                            handler: { _ in
+                                                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
+                                                                                          options: [:],
+                                                                                          completionHandler: nil)
+                    }))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                
+            case .configurationFailed:
+                DispatchQueue.main.async {
+                    let alertMsg = "Alert message when something goes wrong during capture session configuration"
+                    let message = NSLocalizedString("Unable to capture media", comment: alertMsg)
+                    let alertController = UIAlertController(title: "アプリ名", message: message, preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK button"),
+                                                            style: .cancel,
+                                                            handler: nil))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
             }
             
-        } catch {
-            print(error)
         }
     }
     
-    
-    private func setupPreviewLayer() {
-        self.cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        self.cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        self.cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        self.cameraPreviewLayer?.frame = CGRect(x: 0, y: 0, width: view.frame.width * 0.9, height: view.frame.width * 0.9 * 1.5).with(center: CGPoint(x: self.view.center.x, y: self.view.center.y))
-        self.view.layer.insertSublayer(self.cameraPreviewLayer!, at: 0)
+    override func viewWillDisappear(_ animated: Bool) {
+        sessionQueue.async {
+            if self.setupResult == .success {
+                self.session.stopRunning()
+                self.isSessionRunning = self.session.isRunning
+                self.removeObservers()
+            }
+        }
         
+        super.viewWillDisappear(animated)
+    }
+    
+    
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
     }
     
     
@@ -151,6 +141,58 @@ class CameraViewController: UIViewController {
         shutterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
     }
     
+    private func configurePreviewView() {
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        previewView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
+        previewView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
+        previewView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        previewView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+    }
+    
+    
+    let gridView = UIImageView()
+    var gridViewAngle = 90 {
+        didSet {
+            if gridViewAngle == 450 {
+                gridViewAngle = 90
+            }
+        }
+    }
+    
+    // gridViewの作成
+    private func createGridView(imageName: String) {
+        
+        let gridImageName = imageName + String(gridViewAngle)
+        
+        gridView.image = UIImage(named: gridImageName)
+        
+        view.addSubview(gridView)
+        
+        gridView.translatesAutoresizingMaskIntoConstraints = false
+        gridView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
+        gridView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
+        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        gridView.contentMode = .scaleAspectFit
+    }
+    
+    // gridViewの更新
+    private func updateGridView(iconName: String){
+        gridView.removeFromSuperview()
+        createGridView(imageName: iconName)
+    }
+
+    
+    
+    
+    @IBOutlet weak var gridCollectionView: UICollectionView!
+    var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid", "diagonalGrid"]
+    var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon", "diagonalGridIcon"]
+    var iconImageArray = [UIImage]()
+    var selectedIconName = "goldenSpiral"
     
     // gridViewのアイコンを表示するcollectionViewの設定
     private func configureCollectionView() {
@@ -168,10 +210,9 @@ class CameraViewController: UIViewController {
         gridCollectionView.leftAnchor.constraint(equalTo: shutterButton.rightAnchor, constant: 8).isActive = true
         gridCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -view.frame.width * 0.05).isActive = true
         gridCollectionView.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor).isActive = true
-//        gridCollectionView.layer.borderColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1).cgColor
-//        gridCollectionView.layer.borderWidth = 1
+        //        gridCollectionView.layer.borderColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1).cgColor
+        //        gridCollectionView.layer.borderWidth = 1
     }
-    
     
     private func configureIconArray() {
         for iconName in iconImageNameArray {
@@ -181,135 +222,291 @@ class CameraViewController: UIViewController {
     }
     
     
-    // gridViewの作成
-    private func createGridView(imageName: String) {
+    // MARK: session management
+    
+    private enum SessionSetupResult {
+        case success
+        case notAuthorized
+        case configurationFailed
+    }
+    
+    private let session = AVCaptureSession()
+    private var isSessionRunning = false
+    
+    private let sessionQueue = DispatchQueue(label: "session queue")
+    
+    private var setupResult: SessionSetupResult = .success
+    
+    @objc dynamic var videoDeviceInput: AVCaptureDeviceInput!
+    
+    @IBOutlet private weak var previewView: PreviewView!
+    
+    
+    private func configureSession() {
+        
+        if setupResult != .success {
+            return
+        }
+        
+        session.beginConfiguration()
+        
+        session.sessionPreset = .photo
+        
+        // Add video input
+        do {
+            var defaultVideoDevice: AVCaptureDevice?
+            
+            // デュアルカメラが利用可能であればそれを使う
+            if let dualCameraDevice = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
+                defaultVideoDevice = dualCameraDevice
+            } else if let backCameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                // デュアルカメラが利用可能でなければ普通のカメラ
+                defaultVideoDevice = backCameraDevice
+            } else if let frontCameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+                // 背面カメラが利用可能でなければインカメ
+                defaultVideoDevice = frontCameraDevice
+            }
+            
+            // 使えるカメラがなければセッションの設定失敗
+            guard let videoDevice = defaultVideoDevice else {
+                print("default video device is unavailable")
+                
+                setupResult = .configurationFailed
+                session.commitConfiguration()
+                return
+            }
+            let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
+            
+            
+            if session.canAddInput(videoDeviceInput) {
+                session.addInput(videoDeviceInput)
+                self.videoDeviceInput = videoDeviceInput
+                
+                DispatchQueue.main.async {
+                    let statusBarOrientation = UIApplication.shared.statusBarOrientation
+                    var initialVideoOrientation: AVCaptureVideoOrientation = .portrait
+                    
+                    if statusBarOrientation != .unknown {
+                        if let videoOrientation = AVCaptureVideoOrientation(interfaceOrientation: statusBarOrientation) {
+                            initialVideoOrientation = videoOrientation
+                        }
+                    }
+                    
+                    self.previewView.videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
+                }
+            } else {
+                print("Couldn't add video device input to the session.")
+                
+                setupResult = .configurationFailed
+                session.commitConfiguration()
+                return
+            }
+            
+        } catch {
+            print("couldn't create video device input: \(error)")
+            
+            setupResult = .configurationFailed
+            session.commitConfiguration()
+            return
+        }
+        
+        
+        // Add photo output
+        if session.canAddOutput(photoOutput) {
+            session.addOutput(photoOutput)
+            
+            photoOutput.isHighResolutionCaptureEnabled = true
+            
+            // Livephoto、被写界深度コントロールは保留（ボタン配置考えてないし、すくなくともライブフォトはアプリ自体に不要）
+            photoOutput.isLivePhotoCaptureEnabled = false
+            photoOutput.isDepthDataDeliveryEnabled = false
+            photoOutput.isPortraitEffectsMatteDeliveryEnabled = false
+        } else {
+            print("Couldn't add photo output to the session")
+            
+            setupResult = .configurationFailed
+            session.commitConfiguration()
+            return
+        }
+        
+        session.commitConfiguration()
+        
+    }
+    
+    
+    
+    
+    // MARK: Capturing Photos
+    
+    private let photoOutput = AVCapturePhotoOutput()
+    
+    private var inProgressPhotoCaptureDelegates = [Int64: PhotoCaptureProcessor]()
+    
+    @IBOutlet weak var shutterButton: UIButton!
+    
+    /// - Tag: CapturePhoto
+    @IBAction func capturePhoto(_ sender: UIButton) {
+        
+        // session queueに入る前にmain queueでpreview layerのorientationを取得する
+        let videoPreviewLayerOrientation = previewView.videoPreviewLayer.connection?.videoOrientation
+        
+        sessionQueue.async {
+            
+            if let photoOutputConnection = self.photoOutput.connection(with: .video) {
+                photoOutputConnection.videoOrientation = videoPreviewLayerOrientation!
+            }
+            
+            let photoSettings = AVCapturePhotoSettings()
+            
+            // HEIFがサポートされているならば使用
+//            if self.photoOutput.availablePhotoCodecTypes.contains(.hevc) {
+//                photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecKey.hevc])
+//            }
+            
+            // オートフラッシュの有効化
+            if self.videoDeviceInput.device.isFlashAvailable {
+                photoSettings.flashMode = .auto
+            }
+            
+            // HDR写真の有効化
+            photoSettings.isHighResolutionPhotoEnabled = true
+            
+            
+            if !photoSettings.__availablePreviewPhotoPixelFormatTypes.isEmpty {
+                photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoSettings.__availablePreviewPhotoPixelFormatTypes.first!]
+            }
+            
+            // ライブフォト、深度調整、ポートレートモードの設定が入る
+            // 省略
+            
+            let photoCaptureProcessor = PhotoCaptureProcessor(with: photoSettings, willCapturePhotoAnimation: {
+                // Flash the screen to signal that camera took a photo
+                DispatchQueue.main.async {
+                    self.previewView.videoPreviewLayer.opacity = 0
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self.previewView.videoPreviewLayer.opacity = 1
+                    })
+                }
+            }, completionHandler: { photoCaptureProcessor in
+                
+                DispatchQueue.main.async {
+                    let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
+                    self.present(nextVC, animated: true)
+                }
+                
+                self.sessionQueue.async {
+                    self.inProgressPhotoCaptureDelegates[photoCaptureProcessor.requestedPhotoSettings.uniqueID] = nil
+                }
+            }, trimmingAreaView: self.gridView, imageView: self.previewView
+            )
+            
+            self.inProgressPhotoCaptureDelegates[photoCaptureProcessor.requestedPhotoSettings.uniqueID] = photoCaptureProcessor
+            self.photoOutput.capturePhoto(with: photoSettings, delegate: photoCaptureProcessor)
+        }
 
-        let gridImageName = imageName + String(gridViewAngle)
-        
-        gridView.image = UIImage(named: gridImageName)
-        
-        view.addSubview(gridView)
-        
-        gridView.translatesAutoresizingMaskIntoConstraints = false
-        gridView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
-        gridView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
-        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        gridView.contentMode = .scaleAspectFit
-    }
-    
-    
-    // gridViewの更新
-    private func updateGridView(iconName: String){
-        gridView.removeFromSuperview()
-        createGridView(imageName: iconName)
-    }
-    
-    
-    // 切り取る範囲と座標を決める
-    private func makeTrimmingRect(targetImageView: UIImageView, trimmingAreaView: UIView) -> CGRect?{
-        
-        var width = CGFloat()
-        var height = CGFloat()
-        var trimmingX = CGFloat()
-        var trimmingY = CGFloat()
-        
-        let deltaX = targetImageView.frame.origin.x
-        let deltaY = targetImageView.frame.origin.y
-        
-        // trimmingRectの大きさを決定
-        width = trimmingAreaView.frame.size.width
-        height = trimmingAreaView.frame.size.height
-        
-        //trimmingRectの座標を決定
-        trimmingX = trimmingAreaView.frame.origin.x - deltaX
-        trimmingY = trimmingAreaView.frame.origin.y - deltaY
-        
-        return CGRect(x: trimmingX, y: trimmingY, width: width, height: height)
     }
     
     
     
-    // MARK: Action
+    // MARK: KVO and Notifications
     
-    @IBAction func shutterButtonTapped(_ sender: UIButton) {
-        let settings = AVCapturePhotoSettings()
+    private var keyValueObservations = [NSKeyValueObservation]()
+    
+    /// - Tag: ObserveInterruption
+    private func addObservers() {
+        let keyValueObservation = session.observe(\.isRunning, options: .new) { (_, change) in
+            guard let isSessionRunning = change.newValue else { return }
+            // ライブフォト、深度調整、ポートレートモードの設定が入る→省略
+            
+            DispatchQueue.main.async {
+                self.shutterButton.isEnabled = isSessionRunning
+            }
+        }
+        keyValueObservations.append(keyValueObservation)
         
-        settings.isAutoStillImageStabilizationEnabled = true
+//        let systemPressuereStateObservation = observe(\.videoDeviceInput.device.systemPressureState, options: .new) { (_, change) in
+//            guard let systemPressureState = change.newValue else { return }
+//            self.setRecommendedFrameRateRangeForPressureState(systemPressureState: systemPressureState)
+//        }
+//        keyValueObservations.append(contentsOf: systemPressuereStateObservation)
         
-        self.photoOutput?.capturePhoto(with: settings, delegate: self as AVCapturePhotoCaptureDelegate)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(subjectAreaDidChange),
+                                               name: .AVCaptureDeviceSubjectAreaDidChange,
+                                               object: videoDeviceInput.device)
+        
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(sessionRuntimeError),
+//                                               name: .AVCaptureSessionRuntimeError,
+//                                               object: session)
+//
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(sessionWasInterrupted),
+//                                               name: .AVCaptureSessionWasInterrupted,
+//                                               object: session)
+//
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(sessionInterruptionEnded),
+//                                               name: .AVCaptureSessionInterruptionEnded,
+//                                               object: session)
     }
     
     
+    private func removeObservers() {
+        NotificationCenter.default.removeObserver(self)
+        
+        for keyValueObservation in keyValueObservations {
+            keyValueObservation.invalidate()
+        }
+        keyValueObservations.removeAll()
+    }
+    
+    
+    @objc
+    func subjectAreaDidChange(notification: NSNotification) {
+        let devicePoint = CGPoint(x: 0.5, y: 0.5)
+        
+        focus(with: .continuousAutoFocus, exposureMode: .continuousAutoExposure, at: devicePoint, monitorSubjectAreaChange: false)
+    }
+    
+
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    @objc func orientationChanged(_ notification: Notification) {
-        print("### changed")
-        let device = UIDevice.current
-        if device.orientation.isLandscape {
-            self.cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.landscapeLeft
-        } else {
-            self.cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        }
+    @IBAction private func focusAndExposeTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        let devicePoint = previewView.videoPreviewLayer.captureDevicePointConverted(fromLayerPoint: gestureRecognizer.location(in: gestureRecognizer.view))
+        focus(with: .autoFocus, exposureMode: .autoExpose, at: devicePoint, monitorSubjectAreaChange: true)
     }
     
-
-}
-
-
-
-extension CameraViewController: AVCapturePhotoCaptureDelegate {
-    
-    // 撮影完了時に呼ばれる処理
-    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        if let imageData = photo.fileDataRepresentation() {
-            let image = UIImage(data: imageData)
-//            var trimmedImage = UIImage()
+    private func focus(with focusMode: AVCaptureDevice.FocusMode,
+                       exposureMode: AVCaptureDevice.ExposureMode,
+                       at devicePoint: CGPoint,
+                       monitorSubjectAreaChange: Bool) {
+        
+        sessionQueue.async {
+            let device = self.videoDeviceInput.device
             
-            // うまくいかない
-//            let imageViewScale = view.frame.height / gridView.frame.height
-            
-            let cropRect: CGRect = CGRect(x: gridView.frame.origin.x - cameraPreviewLayer!.frame.origin.x,
-                                          y: gridView.frame.origin.y - cameraPreviewLayer!.frame.origin.y,
-                                          width: gridView.frame.width,
-                                          height: gridView.frame.height)
-            
-            print("### cropの範囲", cropRect)
-            print("### gridViewの範囲", gridView.frame)
-            
-//            if let trimmedImage = image?.cgImage?.cropping(to: cropRect) {
-//
-//                print("### ", trimmedImage)
-//                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                appDelegate.photoLibraryImage = UIImage(cgImage: trimmedImage, scale: 1.0, orientation: image!.imageOrientation)
-//
-//                let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
-//                self.present(nextVC, animated: true)
-//            }
-            
-            if let trimmedImage = image?.trimming(to: cropRect, zoomedInOutScale: 1.0) {
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.photoLibraryImage = trimmedImage
+            do {
+                try device.lockForConfiguration()
                 
-                let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
-                self.present(nextVC, animated: true)
+                if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(focusMode) {
+                    device.focusPointOfInterest = devicePoint
+                    device.focusMode = focusMode
+                }
+                
+                if device.isExposurePointOfInterestSupported && device.isExposureModeSupported(exposureMode) {
+                    device.exposurePointOfInterest = devicePoint
+                    device.exposureMode = exposureMode
+                }
+                
+                device.isSubjectAreaChangeMonitoringEnabled = monitorSubjectAreaChange
+                device.unlockForConfiguration()
+                
+            } catch {
+                print("coudln't lock device for configuration: \(error)")
             }
-            
-            
-            // ここまで
-            
-            
-            // これならうまく行くけど比率はおかしい
-//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//            appDelegate.photoLibraryImage = image
-//
-//            let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
-//            self.present(nextVC, animated: true)
-
         }
     }
     
@@ -338,7 +535,7 @@ extension CameraViewController: UICollectionViewDataSource {
 extension CameraViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     
+        
         if selectedIconName == iconNameArray[indexPath.item] {  // 複数回同じアイコンをタップした時
             gridViewAngle += 180
             updateGridView(iconName: selectedIconName)

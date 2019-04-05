@@ -46,6 +46,9 @@ class TrimmingViewController: UIViewController {
         
         setUpPinchInOut()
         
+        view.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissView(notification:)), name: .notifyName, object: nil)
+        
     }
     
     
@@ -341,6 +344,11 @@ class TrimmingViewController: UIViewController {
             moveImageViewToFillBlank()
         }
         
+    }
+    
+    
+    @objc func dismissView(notification: Notification) {
+        dismiss(animated: true, completion: nil)
     }
     
     

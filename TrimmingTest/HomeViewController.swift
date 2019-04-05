@@ -25,7 +25,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         configureNavigationBar()
         configureCallPhotoLibraryButton()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(dismissView(notification:)), name: .notifyName, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,7 +108,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
         
         let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "trimmingNavigationContoller") as! UINavigationController
-        picker.present(nextVC, animated: true)
+//        picker.present(nextVC, animated: true)
+        dismiss(animated: true, completion: nil)
+        present(nextVC, animated: true)
         
     }
     
@@ -119,10 +120,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func callPhotoLibraryButtonTapped(_ sender: UIButton) {
         callPhotoLibrary()
     }
-    
-    
-    @objc func dismissView(notification: Notification) {
-        dismiss(animated: true, completion: nil)
-    }
+
 }
 
