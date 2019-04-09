@@ -25,6 +25,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         configureNavigationBar()
         configureCallPhotoLibraryButton()
         
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        appDelegate.photoLibraryImage = nil
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,7 +58,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     private func configureNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         ]
@@ -70,7 +72,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let picker = UIImagePickerController()
             picker.modalPresentationStyle = UIModalPresentationStyle.popover
             picker.delegate = self
-            picker.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
             picker.sourceType = UIImagePickerController.SourceType.photoLibrary
             
             self.present(picker, animated: true, completion: nil)

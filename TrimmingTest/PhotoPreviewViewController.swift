@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController {
+class PhotoPreviewViewController: UIViewController {
     
     // MARK: property
     
@@ -23,6 +23,17 @@ class PreviewViewController: UIViewController {
         configureNavigationBar()
         createImageView()
         imageView.contentMode = .scaleAspectFit
+        
+//        let count = (self.navigationController?.viewControllers.count)! - 1
+//        let previousVC = self.navigationController?.viewControllers[count]
+//
+//        let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "CameraNavigationController") as! UINavigationController
+//        let cameraVc = nextVC.topViewController as! CameraViewController
+//
+//        if previousVC == cameraVc {
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            imageView.image = appDelegate.photoLibraryImage
+//        }
     }
     
     
@@ -31,7 +42,6 @@ class PreviewViewController: UIViewController {
 
     // NavigationBarの設定
     private func configureNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         ]

@@ -95,7 +95,7 @@
         <!--プレビュー-->
         <scene sceneID="8Mu-rK-PwQ">
             <objects>
-                <viewController id="1uk-qE-DUi" customClass="PreviewViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1uk-qE-DUi" customClass="PhotoPreviewViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RTI-9j-jnL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,7 +158,7 @@
         <!--My Navigation Controller-->
         <scene sceneID="sWx-L3-x9w">
             <objects>
-                <navigationController storyboardIdentifier="previewNavigationContoller" automaticallyAdjustsScrollViewInsets="NO" id="8yn-o4-2rA" customClass="MyNavigationController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PhotoPreviewViewNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="8yn-o4-2rA" customClass="MyNavigationController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="d6P-j8-dTd">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -220,7 +220,7 @@
             </objects>
             <point key="canvasLocation" x="3032.8000000000002" y="984.55772113943033"/>
         </scene>
-        <!--カメラ-->
+        <!--カメラ2-->
         <scene sceneID="0TJ-HQ-2Fq">
             <objects>
                 <viewController id="BEA-2V-jwx" customClass="CameraViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -259,7 +259,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ZOr-Cl-Vso"/>
                     </view>
-                    <navigationItem key="navigationItem" title="カメラ" id="oXi-Z8-8vL">
+                    <navigationItem key="navigationItem" title="カメラ2" id="oXi-Z8-8vL">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="e8M-MB-02S">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="BEA-2V-jwx" id="7WN-FU-rU2"/>
@@ -284,7 +284,7 @@
         <!--Navigation Controller-->
         <scene sceneID="d4b-ZE-QgP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fmI-cx-GGb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CameraNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="fmI-cx-GGb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="M8G-QB-zht">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

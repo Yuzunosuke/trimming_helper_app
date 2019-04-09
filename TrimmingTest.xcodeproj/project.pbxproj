@@ -10,7 +10,7 @@
 		024B42AB225743E600557E47 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024B42AA225743E600557E47 /* CameraViewController.swift */; };
 		024B42AD22574CA200557E47 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024B42AC22574CA200557E47 /* PreviewView.swift */; };
 		024B42AF2257597500557E47 /* AVCaptureVideoOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024B42AE2257597500557E47 /* AVCaptureVideoOrientation.swift */; };
-		024B42B122576EB200557E47 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024B42B022576EB200557E47 /* File.swift */; };
+		024B42B122576EB200557E47 /* PhotoCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024B42B022576EB200557E47 /* PhotoCaptureDelegate.swift */; };
 		024D9D4B22511CBA00061EE9 /* CGRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9D4A22511CBA00061EE9 /* CGRect+Center.swift */; };
 		02B20586224A594D00DED682 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B20585224A594D00DED682 /* AppDelegate.swift */; };
 		02B20588224A594D00DED682 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B20587224A594D00DED682 /* HomeViewController.swift */; };
@@ -20,7 +20,7 @@
 		02B20598224A68B200DED682 /* TrimmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B20597224A68B200DED682 /* TrimmingViewController.swift */; };
 		02B2059C224A768900DED682 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059B224A768900DED682 /* MyNavigationController.swift */; };
 		02B2059E224A7A7500DED682 /* UIImage+Trimming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059D224A7A7500DED682 /* UIImage+Trimming.swift */; };
-		02B205A0224ACC9E00DED682 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059F224ACC9E00DED682 /* PreviewViewController.swift */; };
+		02B205A0224ACC9E00DED682 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2059F224ACC9E00DED682 /* PhotoPreviewViewController.swift */; };
 		02B205A2224ADCA500DED682 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A1224ADCA500DED682 /* NotificationExtension.swift */; };
 		02B205A5224B35D300DED682 /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */; };
 		02B205A8224B666600DED682 /* CameraTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B205A7224B666600DED682 /* CameraTestViewController.swift */; };
@@ -30,7 +30,7 @@
 		024B42AA225743E600557E47 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		024B42AC22574CA200557E47 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		024B42AE2257597500557E47 /* AVCaptureVideoOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureVideoOrientation.swift; sourceTree = "<group>"; };
-		024B42B022576EB200557E47 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		024B42B022576EB200557E47 /* PhotoCaptureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureDelegate.swift; sourceTree = "<group>"; };
 		024D9D4A22511CBA00061EE9 /* CGRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Center.swift"; sourceTree = "<group>"; };
 		02B20582224A594D00DED682 /* TrimmingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrimmingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02B20585224A594D00DED682 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		02B20597224A68B200DED682 /* TrimmingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimmingViewController.swift; sourceTree = "<group>"; };
 		02B2059B224A768900DED682 /* MyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		02B2059D224A7A7500DED682 /* UIImage+Trimming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Trimming.swift"; sourceTree = "<group>"; };
-		02B2059F224ACC9E00DED682 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		02B2059F224ACC9E00DED682 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
 		02B205A1224ADCA500DED682 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
 		02B205A7224B666600DED682 /* CameraTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTestViewController.swift; sourceTree = "<group>"; };
@@ -93,9 +93,10 @@
 				02B2059B224A768900DED682 /* MyNavigationController.swift */,
 				02B20587224A594D00DED682 /* HomeViewController.swift */,
 				02B20597224A68B200DED682 /* TrimmingViewController.swift */,
-				02B2059F224ACC9E00DED682 /* PreviewViewController.swift */,
+				02B2059F224ACC9E00DED682 /* PhotoPreviewViewController.swift */,
 				02B205A7224B666600DED682 /* CameraTestViewController.swift */,
 				024B42AA225743E600557E47 /* CameraViewController.swift */,
+				024B42B022576EB200557E47 /* PhotoCaptureDelegate.swift */,
 				024B42AC22574CA200557E47 /* PreviewView.swift */,
 				02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */,
 				02B20589224A594D00DED682 /* Main.storyboard */,
@@ -103,7 +104,6 @@
 				02B2058C224A594F00DED682 /* Assets.xcassets */,
 				02B2058E224A594F00DED682 /* LaunchScreen.storyboard */,
 				02B20591224A594F00DED682 /* Info.plist */,
-				024B42B022576EB200557E47 /* File.swift */,
 			);
 			path = TrimmingTest;
 			sourceTree = "<group>";
@@ -188,10 +188,10 @@
 				024B42AD22574CA200557E47 /* PreviewView.swift in Sources */,
 				02B2059E224A7A7500DED682 /* UIImage+Trimming.swift in Sources */,
 				02B205A5224B35D300DED682 /* GridCollectionViewCell.swift in Sources */,
-				024B42B122576EB200557E47 /* File.swift in Sources */,
+				024B42B122576EB200557E47 /* PhotoCaptureDelegate.swift in Sources */,
 				02B20586224A594D00DED682 /* AppDelegate.swift in Sources */,
 				02B205A2224ADCA500DED682 /* NotificationExtension.swift in Sources */,
-				02B205A0224ACC9E00DED682 /* PreviewViewController.swift in Sources */,
+				02B205A0224ACC9E00DED682 /* PhotoPreviewViewController.swift in Sources */,
 				02B205A8224B666600DED682 /* CameraTestViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

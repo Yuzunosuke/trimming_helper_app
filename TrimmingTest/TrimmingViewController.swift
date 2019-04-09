@@ -16,14 +16,20 @@ class TrimmingViewController: UIViewController {
     
     var image: UIImage!
     let gridView = UIImageView()
+    let gridFrameView = UIView()
     var imageView = UIImageView()
-    var scaleZoomedInOut: CGFloat = 1.0
+    var scaleZoomedInOut: CGFloat = 1.0 {
+        didSet {
+            print("#### scaleZoomedInOut", scaleZoomedInOut)
+        }
+    }
     @IBOutlet weak var gridCollectionView: UICollectionView!
     var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid", "diagonalGrid"]
     var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon", "diagonalGridIcon"]
     var iconImageArray = [UIImage]()
     var selectedIconName = "goldenSpiral"
     var gridViewConstraints: [NSLayoutConstraint] = []
+    var gridFrameViewConstraints: [NSLayoutConstraint] = []
     var gridViewAngle = 0 {
         didSet {
             if gridViewAngle == 360 {
@@ -41,12 +47,13 @@ class TrimmingViewController: UIViewController {
 
         configureNavigationBar()
         createGridView(imageName: iconNameArray[0])
+        createGridFrameView()
         configureCollectionView()
         configureIconArray()
         
         setUpPinchInOut()
         
-        view.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1)
+        view.backgroundColor = UIColor(red: 203/255, green: 203/255, blue: 203/255, alpha: 1)
         NotificationCenter.default.addObserver(self, selector: #selector(dismissView(notification:)), name: .notifyName, object: nil)
         
     }
@@ -90,7 +97,6 @@ class TrimmingViewController: UIViewController {
     
     // NavigationBarの設定
     private func configureNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         ]
@@ -148,6 +154,7 @@ class TrimmingViewController: UIViewController {
     private func updateGridView(iconName: String){
         gridView.removeFromSuperview()
         createGridView(imageName: iconName)
+        createGridFrameView()
     }
     
     
@@ -201,6 +208,7 @@ class TrimmingViewController: UIViewController {
         gridCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         gridCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         gridCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
     }
     
     
@@ -210,6 +218,43 @@ class TrimmingViewController: UIViewController {
             guard let gridImage = UIImage(named: iconName) else { return }
             iconImageArray.append(gridImage)
         }
+    }
+    
+    
+    // gridViewの外枠を描画してはみ出しを見えなくさせる
+    private func createGridFrameView() {
+        gridFrameView.layer.borderWidth = 2.5
+        gridFrameView.layer.borderColor = UIColor(red: 255/255, green: 109/255, blue: 112/255, alpha: 1).cgColor
+        
+        view.addSubview(gridFrameView)
+        
+        gridFrameView.translatesAutoresizingMaskIntoConstraints = false
+        configureGridFrameViewConstraints()
+    }
+    
+    
+    private func configureGridFrameViewConstraints() {
+        NSLayoutConstraint.deactivate(gridFrameViewConstraints)
+        gridFrameViewConstraints.removeAll()
+        
+        if gridViewAngle == 0 || gridViewAngle == 180 {
+            gridFrameViewConstraints = [
+                gridFrameView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 / 1.5),
+                gridFrameView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9)
+            ]
+        }
+        
+        if gridViewAngle == 90 || gridViewAngle == 270 {
+            gridFrameViewConstraints = [
+                gridFrameView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5),
+                gridFrameView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9)
+            ]
+        }
+        
+        gridFrameViewConstraints.append(gridFrameView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+        gridFrameViewConstraints.append(gridFrameView.centerYAnchor.constraint(equalTo: view.centerYAnchor))
+        
+        NSLayoutConstraint.activate(gridFrameViewConstraints)
     }
     
     
@@ -241,10 +286,15 @@ class TrimmingViewController: UIViewController {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(gesture:)))
         pinchGesture.delegate = self as? UIGestureRecognizerDelegate
         
-        self.gridView.isUserInteractionEnabled = true
-        self.gridView.isMultipleTouchEnabled = true
+        self.gridFrameView.isUserInteractionEnabled = true
+        self.gridFrameView.isMultipleTouchEnabled = true
         
-        self.gridView.addGestureRecognizer(pinchGesture)
+        self.gridFrameView.addGestureRecognizer(pinchGesture)
+        
+//        self.gridView.isUserInteractionEnabled = true
+//        self.gridView.isMultipleTouchEnabled = true
+//
+//        self.gridView.addGestureRecognizer(pinchGesture)
     }
     
     
@@ -286,10 +336,12 @@ class TrimmingViewController: UIViewController {
     @IBAction func trimButtonTapped(_ sender: UIBarButtonItem) {
         if let trimmingRect = makeTrimmingRect(targetImageView: imageView, trimmingAreaView: gridView) {
             image = image.trimming(to: trimmingRect, zoomedInOutScale: scaleZoomedInOut)
-
+            print("### gridViewのフレーム", gridView.frame)
+            print("### trimmingRect", trimmingRect)
+            print("### zoomedInOutScale", scaleZoomedInOut)
             
-            let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "previewNavigationContoller") as! UINavigationController
-            let vc = nextVC.topViewController as! PreviewViewController
+            let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewViewNavigationController") as! UINavigationController
+            let vc = nextVC.topViewController as! PhotoPreviewViewController
             vc.imageView.image = image
             self.present(nextVC, animated: true)
             imageView.removeFromSuperview()
@@ -370,7 +422,6 @@ extension TrimmingViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
     
 }
 

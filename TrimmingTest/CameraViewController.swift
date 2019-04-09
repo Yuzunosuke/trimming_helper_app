@@ -47,6 +47,7 @@ class CameraViewController: UIViewController {
         configureCollectionView()
         configureIconArray()
         createGridView(imageName: iconNameArray[0])
+        createGridFrameView()
         configurePreviewView()
         
     }
@@ -121,7 +122,6 @@ class CameraViewController: UIViewController {
     
     
     private func configureNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 233/255, green: 119/255, blue: 113/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         ]
@@ -142,17 +142,32 @@ class CameraViewController: UIViewController {
     }
     
     private func configurePreviewView() {
+//        previewView.videoPreviewLayer.frame = CGRect(x: 0,
+//                                                     y: 0,
+//                                                     width: view.frame.width * 0.9,
+//                                                     height: view.frame.width * 0.9 * 1.5)
+//            .with(center: CGPoint(x: self.view.center.x, y: self.view.center.y))
+        
+        previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        
         previewView.translatesAutoresizingMaskIntoConstraints = false
         previewView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
         previewView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
+//        previewView.topAnchor.constraint(equalTo: gridView.topAnchor).isActive = true
+//        previewView.bottomAnchor.constraint(equalTo: gridView.bottomAnchor).isActive = true
+//        previewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        previewView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         previewView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         previewView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        previewView.contentMode = .scaleAspectFit
+        
+        previewView.videoPreviewLayer.frame = previewView.layer.bounds
     }
     
     
     let gridView = UIImageView()
+    let gridFrameView = UIView()
     var gridViewAngle = 90 {
         didSet {
             if gridViewAngle == 450 {
@@ -181,10 +196,27 @@ class CameraViewController: UIViewController {
     
     // gridViewの更新
     private func updateGridView(iconName: String){
-        gridView.removeFromSuperview()
-        createGridView(imageName: iconName)
+        let gridImageName = iconName + String(gridViewAngle)
+        
+        gridView.image = UIImage(named: gridImageName)
+//        gridView.removeFromSuperview()
+//        createGridView(imageName: iconName)
     }
-
+    
+    
+    // gridViewの外枠を描画してはみ出しを見えなくさせる
+    private func createGridFrameView() {
+        gridFrameView.layer.borderWidth = 2.5
+        gridFrameView.layer.borderColor = UIColor(red: 255/255, green: 109/255, blue: 112/255, alpha: 1).cgColor
+        
+        view.addSubview(gridFrameView)
+        
+        gridFrameView.translatesAutoresizingMaskIntoConstraints = false
+        gridFrameView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
+        gridFrameView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
+        gridFrameView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        gridFrameView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
     
     
     

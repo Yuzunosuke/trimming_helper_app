@@ -22,7 +22,10 @@ extension UIImage {
             }
         }
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: trimmingRect.size.width/zoomedInOutScale, height: trimmingRect.size.height/zoomedInOutScale), opaque, scale)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: trimmingRect.size.width/zoomedInOutScale,
+                                                      height: trimmingRect.size.height/zoomedInOutScale),
+                                               opaque,
+                                               scale)
         draw(at: CGPoint(x: -trimmingRect.origin.x/zoomedInOutScale, y: -trimmingRect.origin.y/zoomedInOutScale))
         let trimmedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
