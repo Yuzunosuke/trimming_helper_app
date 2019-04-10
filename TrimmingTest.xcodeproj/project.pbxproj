@@ -100,9 +100,9 @@
 				024B42AC22574CA200557E47 /* PreviewView.swift */,
 				02B205A3224B35D300DED682 /* GridCollectionViewCell.swift */,
 				02B20589224A594D00DED682 /* Main.storyboard */,
+				02B2058E224A594F00DED682 /* LaunchScreen.storyboard */,
 				022077702251F86C00A77C97 /* Extensions */,
 				02B2058C224A594F00DED682 /* Assets.xcassets */,
-				02B2058E224A594F00DED682 /* LaunchScreen.storyboard */,
 				02B20591224A594F00DED682 /* Info.plist */,
 			);
 			path = TrimmingTest;

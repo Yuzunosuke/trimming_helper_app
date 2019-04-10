@@ -47,7 +47,6 @@ class CameraViewController: UIViewController {
         configureCollectionView()
         configureIconArray()
         createGridView(imageName: iconNameArray[0])
-        createGridFrameView()
         configurePreviewView()
         
     }
@@ -141,6 +140,8 @@ class CameraViewController: UIViewController {
         shutterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
     }
     
+    
+    
     private func configurePreviewView() {
 //        previewView.videoPreviewLayer.frame = CGRect(x: 0,
 //                                                     y: 0,
@@ -183,6 +184,9 @@ class CameraViewController: UIViewController {
         
         gridView.image = UIImage(named: gridImageName)
         
+        gridView.layer.borderWidth = 2.5
+        gridView.layer.borderColor = UIColor(red: 115/255, green: 203/255, blue: 221/255, alpha: 1).cgColor
+        
         view.addSubview(gridView)
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
@@ -199,24 +203,8 @@ class CameraViewController: UIViewController {
         let gridImageName = iconName + String(gridViewAngle)
         
         gridView.image = UIImage(named: gridImageName)
-//        gridView.removeFromSuperview()
-//        createGridView(imageName: iconName)
     }
-    
-    
-    // gridViewの外枠を描画してはみ出しを見えなくさせる
-    private func createGridFrameView() {
-        gridFrameView.layer.borderWidth = 2.5
-        gridFrameView.layer.borderColor = UIColor(red: 255/255, green: 109/255, blue: 112/255, alpha: 1).cgColor
-        
-        view.addSubview(gridFrameView)
-        
-        gridFrameView.translatesAutoresizingMaskIntoConstraints = false
-        gridFrameView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
-        gridFrameView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
-        gridFrameView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        gridFrameView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
+
     
     
     
@@ -507,10 +495,14 @@ class CameraViewController: UIViewController {
     }
     
     
+    // タップしてピントや露出を調整する
     @IBAction private func focusAndExposeTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        print("### Tapped!!!!")
         let devicePoint = previewView.videoPreviewLayer.captureDevicePointConverted(fromLayerPoint: gestureRecognizer.location(in: gestureRecognizer.view))
+        print("### ", devicePoint)
         focus(with: .autoFocus, exposureMode: .autoExpose, at: devicePoint, monitorSubjectAreaChange: true)
     }
+    
     
     private func focus(with focusMode: AVCaptureDevice.FocusMode,
                        exposureMode: AVCaptureDevice.ExposureMode,

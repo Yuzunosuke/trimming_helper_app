@@ -47,13 +47,11 @@ class TrimmingViewController: UIViewController {
 
         configureNavigationBar()
         createGridView(imageName: iconNameArray[0])
-        createGridFrameView()
         configureCollectionView()
         configureIconArray()
         
         setUpPinchInOut()
         
-        view.backgroundColor = UIColor(red: 203/255, green: 203/255, blue: 203/255, alpha: 1)
         NotificationCenter.default.addObserver(self, selector: #selector(dismissView(notification:)), name: .notifyName, object: nil)
         
     }
@@ -115,6 +113,9 @@ class TrimmingViewController: UIViewController {
         
         gridView.image = UIImage(named: gridImageName)
         
+        gridView.layer.borderWidth = 2.5
+        gridView.layer.borderColor = UIColor(red: 115/255, green: 203/255, blue: 221/255, alpha: 1).cgColor
+        
         view.addSubview(gridView)
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
@@ -154,7 +155,6 @@ class TrimmingViewController: UIViewController {
     private func updateGridView(iconName: String){
         gridView.removeFromSuperview()
         createGridView(imageName: iconName)
-        createGridFrameView()
     }
     
     
@@ -220,42 +220,6 @@ class TrimmingViewController: UIViewController {
         }
     }
     
-    
-    // gridViewの外枠を描画してはみ出しを見えなくさせる
-    private func createGridFrameView() {
-        gridFrameView.layer.borderWidth = 2.5
-        gridFrameView.layer.borderColor = UIColor(red: 255/255, green: 109/255, blue: 112/255, alpha: 1).cgColor
-        
-        view.addSubview(gridFrameView)
-        
-        gridFrameView.translatesAutoresizingMaskIntoConstraints = false
-        configureGridFrameViewConstraints()
-    }
-    
-    
-    private func configureGridFrameViewConstraints() {
-        NSLayoutConstraint.deactivate(gridFrameViewConstraints)
-        gridFrameViewConstraints.removeAll()
-        
-        if gridViewAngle == 0 || gridViewAngle == 180 {
-            gridFrameViewConstraints = [
-                gridFrameView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 / 1.5),
-                gridFrameView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9)
-            ]
-        }
-        
-        if gridViewAngle == 90 || gridViewAngle == 270 {
-            gridFrameViewConstraints = [
-                gridFrameView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5),
-                gridFrameView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9)
-            ]
-        }
-        
-        gridFrameViewConstraints.append(gridFrameView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
-        gridFrameViewConstraints.append(gridFrameView.centerYAnchor.constraint(equalTo: view.centerYAnchor))
-        
-        NSLayoutConstraint.activate(gridFrameViewConstraints)
-    }
     
     
     // 切り取る範囲と座標を決める
