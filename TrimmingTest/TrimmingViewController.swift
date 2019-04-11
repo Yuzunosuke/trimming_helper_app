@@ -16,7 +16,6 @@ class TrimmingViewController: UIViewController {
     
     var image: UIImage!
     let gridView = UIImageView()
-    let gridFrameView = UIView()
     var imageView = UIImageView()
     var scaleZoomedInOut: CGFloat = 1.0 {
         didSet {
@@ -250,10 +249,10 @@ class TrimmingViewController: UIViewController {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(gesture:)))
         pinchGesture.delegate = self as? UIGestureRecognizerDelegate
         
-        self.gridFrameView.isUserInteractionEnabled = true
-        self.gridFrameView.isMultipleTouchEnabled = true
+        self.gridView.isUserInteractionEnabled = true
+        self.gridView.isMultipleTouchEnabled = true
         
-        self.gridFrameView.addGestureRecognizer(pinchGesture)
+        self.gridView.addGestureRecognizer(pinchGesture)
         
 //        self.gridView.isUserInteractionEnabled = true
 //        self.gridView.isMultipleTouchEnabled = true
