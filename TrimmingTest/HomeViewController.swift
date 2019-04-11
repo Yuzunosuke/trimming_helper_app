@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.setNeedsStatusBarAppearanceUpdate()
         configureNavigationBar()
         configureCallPhotoLibraryButton()
+        configureCameraButton()
         
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        appDelegate.photoLibraryImage = nil

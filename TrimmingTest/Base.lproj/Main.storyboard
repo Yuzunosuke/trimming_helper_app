@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ホーム-->
+        <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,7 +38,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="ホーム" id="hyd-hq-dvu"/>
+                    <navigationItem key="navigationItem" title="Home" id="hyd-hq-dvu"/>
                     <connections>
                         <outlet property="callPhotoLibraryButton" destination="2Qu-Ri-LxI" id="qfz-SU-DPb"/>
                         <outlet property="cameraButton" destination="9Kh-a5-Yvg" id="bDj-jv-Arc"/>
@@ -48,7 +48,7 @@
             </objects>
             <point key="canvasLocation" x="1055" y="546"/>
         </scene>
-        <!--トリミング-->
+        <!--Trimming-->
         <scene sceneID="Atq-2l-wNR">
             <objects>
                 <viewController storyboardIdentifier="trimmingVC" id="3eP-Jv-h8I" customClass="TrimmingViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,13 +72,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="mZw-Tx-CPk"/>
                     </view>
-                    <navigationItem key="navigationItem" title="トリミング" id="R2r-rT-Go2">
+                    <navigationItem key="navigationItem" title="Trimming" id="R2r-rT-Go2">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pPB-UV-2HZ">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="3eP-Jv-h8I" id="yGt-Rh-xLG"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Trim" id="kyQ-U7-xmk">
+                        <barButtonItem key="rightBarButtonItem" title="Preview" id="kyQ-U7-xmk">
                             <connections>
                                 <action selector="trimButtonTapped:" destination="3eP-Jv-h8I" id="cLl-XE-3P9"/>
                             </connections>
@@ -92,7 +92,7 @@
             </objects>
             <point key="canvasLocation" x="3032.8000000000002" y="124.58770614692655"/>
         </scene>
-        <!--プレビュー-->
+        <!--Preview-->
         <scene sceneID="8Mu-rK-PwQ">
             <objects>
                 <viewController id="1uk-qE-DUi" customClass="PhotoPreviewViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -102,7 +102,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Wag-42-yyT"/>
                     </view>
-                    <navigationItem key="navigationItem" title="プレビュー" id="4Fi-a0-9Mo">
+                    <navigationItem key="navigationItem" title="Preview" id="4Fi-a0-9Mo">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yn5-7o-RIt">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="1uk-qE-DUi" id="SzK-74-Ysp"/>
@@ -173,7 +173,7 @@
             </objects>
             <point key="canvasLocation" x="4308" y="125"/>
         </scene>
-        <!--カメラ-->
+        <!--Camera-->
         <scene sceneID="u2e-2M-oun">
             <objects>
                 <viewController id="w0k-1j-bgh" customClass="CameraTestViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -204,7 +204,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="bp0-XS-bgP"/>
                     </view>
-                    <navigationItem key="navigationItem" title="カメラ" id="ZPI-nC-WA7">
+                    <navigationItem key="navigationItem" title="Camera" id="ZPI-nC-WA7">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="f3O-lP-lRz">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="w0k-1j-bgh" id="GXp-7b-AWV"/>
@@ -220,7 +220,7 @@
             </objects>
             <point key="canvasLocation" x="3032.8000000000002" y="984.55772113943033"/>
         </scene>
-        <!--カメラ2-->
+        <!--Camera-->
         <scene sceneID="0TJ-HQ-2Fq">
             <objects>
                 <viewController id="BEA-2V-jwx" customClass="CameraViewController" customModule="TrimmingTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -259,7 +259,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ZOr-Cl-Vso"/>
                     </view>
-                    <navigationItem key="navigationItem" title="カメラ2" id="oXi-Z8-8vL">
+                    <navigationItem key="navigationItem" title="Camera" id="oXi-Z8-8vL">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="e8M-MB-02S">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="BEA-2V-jwx" id="7WN-FU-rU2"/>

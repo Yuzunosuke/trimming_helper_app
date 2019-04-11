@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  TrimmingTest
+
+  Created by 堺雄之介 on 2019/04/11.
+  Copyright © 2019 Yunosuke Sakai. All rights reserved.
+*/
+
+
+// PhotoPreviewViewController
+"Saved." = "保存されました";
+
+"AppNAME doesn't have permission to use the camera, please change privacy settings" = "「アプリ名」はカメラにアクセスすることができません。設定を変更してください。";
+
+
+// CameraViewController
+
+"Settings" = "設定";
+
+"Couldn't access the Camera" = "カメラを使用できません";
+
+"No" = "許可しない";
+
+"Unable to capture media" = "写真を撮影できません";

@@ -64,13 +64,19 @@ class CameraViewController: UIViewController {
                 
             case .notAuthorized:
                 DispatchQueue.main.async {
+                    
+                    // カメラの使用が許可されていない時のアラート
+                    let title = NSLocalizedString("Couldn't access the Camera", comment: "")
                     let changePrivacySetting = "AppNAME doesn't have permission to use the camera, please change privacy settings"
-                    let message = NSLocalizedString(changePrivacySetting, comment: "カメラアクセスを拒否した時のアラートメッセージ")
-                    let alertController = UIAlertController(title: "アプリ名", message: message, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK button"),
+                    let message = NSLocalizedString(changePrivacySetting, comment: "")
+                    let alertController = UIAlertController(title: title,
+                                                            message: message,
+                                                            preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""),
                                                             style: .cancel,
                                                             handler: nil))
-                    alertController.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "button to open settings"),
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: ""),
                                                             style: .default,
                                                             handler: { _ in
                                                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
@@ -83,11 +89,11 @@ class CameraViewController: UIViewController {
                 
             case .configurationFailed:
                 DispatchQueue.main.async {
-                    let alertMsg = "Alert message when something goes wrong during capture session configuration"
-                    let message = NSLocalizedString("Unable to capture media", comment: alertMsg)
+                    /// - TODO: Change AppNAME to real app name.
+                    let message = NSLocalizedString("Unable to capture media", comment: "")
                     let alertController = UIAlertController(title: "アプリ名", message: message, preferredStyle: .alert)
                     
-                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK button"),
+                    alertController.addAction(UIAlertAction(title: "OK",
                                                             style: .cancel,
                                                             handler: nil))
                     

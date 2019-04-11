@@ -1,0 +1,18 @@
+
+/* Class = "UINavigationItem"; title = "プレビュー"; ObjectID = "4Fi-a0-9Mo"; */
+"4Fi-a0-9Mo.title" = "プレビュー";
+
+/* Class = "UINavigationItem"; title = "トリミング"; ObjectID = "R2r-rT-Go2"; */
+"R2r-rT-Go2.title" = "トリミング";
+
+/* Class = "UINavigationItem"; title = "カメラ"; ObjectID = "ZPI-nC-WA7"; */
+"ZPI-nC-WA7.title" = "カメラ";
+
+/* Class = "UINavigationItem"; title = "ホーム"; ObjectID = "hyd-hq-dvu"; */
+"hyd-hq-dvu.title" = "ホーム";
+
+/* Class = "UIBarButtonItem"; title = "Trim"; ObjectID = "kyQ-U7-xmk"; */
+"kyQ-U7-xmk.title" = "プレビュー";
+
+/* Class = "UINavigationItem"; title = "カメラ2"; ObjectID = "oXi-Z8-8vL"; */
+"oXi-Z8-8vL.title" = "カメラ";

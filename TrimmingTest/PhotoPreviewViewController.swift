@@ -69,7 +69,8 @@ class PhotoPreviewViewController: UIViewController {
         guard let image = imageView.image else { return }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
-        let alert = UIAlertController(title: "保存されました", message: "", preferredStyle: .alert)
+        let messageForSaved: String = NSLocalizedString("Saved.", comment: "")
+        let alert = UIAlertController(title: messageForSaved, message: "", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default){ (_) in
             NotificationCenter.default.post(name: .notifyName, object: nil)
         }
