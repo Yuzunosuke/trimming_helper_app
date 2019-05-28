@@ -22,6 +22,14 @@ extension UIImage {
             }
         }
         
+        
+//        let size = CGSize(width: trimmingRect.size.width, height: trimmingRect.size.height)
+//
+//        UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
+        
+        
+        
+        
         UIGraphicsBeginImageContextWithOptions(CGSize(width: trimmingRect.size.width/zoomedInOutScale,
                                                       height: trimmingRect.size.height/zoomedInOutScale),
                                                opaque,

@@ -11,6 +11,13 @@ import Foundation
 
 class TrimmingViewController: UIViewController {
     
+    // TODO
+    // we have 2 points.
+    // 1.
+    // zoom in/out image more smooth!
+    // 2.
+    // user can rotate image!
+    
     
     // MARK: Property
     
@@ -22,6 +29,15 @@ class TrimmingViewController: UIViewController {
             print("#### scaleZoomedInOut", scaleZoomedInOut)
         }
     }
+    
+    
+    @IBOutlet weak var settingStackView: UIStackView!
+    @IBOutlet weak var settingHorizontalStackView: UIStackView!
+    
+    @IBOutlet weak var rotationSlider: UISlider!
+    
+    @IBOutlet weak var undoButton: UIButton!
+    
     @IBOutlet weak var gridCollectionView: UICollectionView!
     var iconNameArray = ["goldenSpiral", "goldenSpiralReverse", "goldenGrid", "3divisionGrid", "goldenDiagonal", "centerGrid", "diagonalGrid"]
     var iconImageNameArray = ["goldenSpiralIcon", "goldenSpiralReverseIcon", "goldenGridIcon", "3divisionGridIcon", "goldenDiagonalIcon", "centerGridIcon", "diagonalGridIcon"]
@@ -48,6 +64,10 @@ class TrimmingViewController: UIViewController {
         createGridView(imageName: iconNameArray[0])
         configureCollectionView()
         configureIconArray()
+        configureUndoButton()
+        configureRotationSlider()
+        configureSettingHorizontalStackView()
+        configureSettingStackView()
         
         setUpPinchInOut()
         
@@ -63,6 +83,8 @@ class TrimmingViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         image = appDelegate.photoLibraryImage
         createImageView(sourceImage: image)
+        
+        rotationSlider.value = 0
     }
     
     
@@ -198,10 +220,11 @@ class TrimmingViewController: UIViewController {
         gridCollectionView.delegate = self
         gridCollectionView.dataSource = self
         
-        gridCollectionView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+//        gridCollectionView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+        gridCollectionView.backgroundColor = .clear
         
-        view.bringSubviewToFront(gridCollectionView)
-        
+//        view.bringSubviewToFront(gridCollectionView)
+//
         gridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         gridCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         gridCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -210,6 +233,83 @@ class TrimmingViewController: UIViewController {
         
     }
     
+    private func configureUndoButton() {
+        
+        undoButton.layer.borderWidth = 1.0
+        undoButton.layer.borderColor = UIColor.blue.cgColor
+        
+        undoButton.backgroundColor = .clear
+        
+        undoButton.translatesAutoresizingMaskIntoConstraints = false
+        undoButton.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        undoButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+//        undoButton.leftAnchor.constraint(equalTo: rotationSlider.rightAnchor, constant: 8).isActive = true
+        undoButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+        undoButton.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
+    }
+    
+    // rotationSliderの設定
+    private func configureRotationSlider() {
+        
+        rotationSlider.layer.borderWidth = 1.0
+        rotationSlider.layer.borderColor = UIColor.black.cgColor
+        
+//        rotationSlider.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+        rotationSlider.backgroundColor = .clear
+        
+//        view.bringSubviewToFront(rotationSlider)
+        
+        rotationSlider.minimumValue = -30
+        rotationSlider.maximumValue = 30
+        
+        rotationSlider.setValue(0, animated: false)
+        
+        rotationSlider.translatesAutoresizingMaskIntoConstraints = false
+        rotationSlider.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        rotationSlider.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        rotationSlider.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -76).isActive = true
+        rotationSlider.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
+    }
+    
+    
+    private func configureSettingStackView() {
+        
+        settingStackView.layer.borderWidth = 1.0
+        settingStackView.layer.borderColor = UIColor.red.cgColor
+        
+//        settingStackView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+        settingStackView.backgroundColor = .black
+        
+        view.bringSubviewToFront(settingStackView)
+        
+        settingStackView.alignment = .center
+        settingStackView.distribution = .fillProportionally
+        settingStackView.spacing = 0
+        
+        settingStackView.translatesAutoresizingMaskIntoConstraints = false
+        settingStackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        settingStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        settingStackView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        settingStackView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    private func configureSettingHorizontalStackView() {
+        
+        settingHorizontalStackView.layer.borderWidth = 1.0
+        settingHorizontalStackView.layer.borderColor = UIColor.red.cgColor
+        
+        view.bringSubviewToFront(settingHorizontalStackView)
+        
+        settingHorizontalStackView.alignment = .center
+        settingHorizontalStackView.distribution = .fillProportionally
+        settingHorizontalStackView.spacing = 0
+        
+        settingHorizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        settingHorizontalStackView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        settingHorizontalStackView.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
+        settingHorizontalStackView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        settingHorizontalStackView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
     
     // gridのアイコンの画像を格納する配列の設定
     private func configureIconArray() {
@@ -219,8 +319,7 @@ class TrimmingViewController: UIViewController {
         }
     }
     
-    
-    
+
     // 切り取る範囲と座標を決める
     private func makeTrimmingRect(targetImageView: UIImageView, trimmingAreaView: UIView) -> CGRect?{
         
@@ -359,6 +458,26 @@ class TrimmingViewController: UIViewController {
             moveImageViewToFillBlank()
         }
         
+    }
+    
+    var currentAngle: Float = 0
+    var rotationAngle: Float = 0
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        
+//        rotationAngle = rotationSlider.value - currentAngle
+        rotationAngle = (rotationSlider.value - currentAngle) * .pi / 180
+        print("### rotationAngle: ", rotationAngle)
+        
+        imageView.image = imageView.image?.rotatedAndCropped(angle: CGFloat(rotationAngle))
+
+        currentAngle = rotationSlider.value
+    }
+    
+    
+    @IBAction func undoButtonTapped(_ sender: Any) {
+        updateImageView()
+        
+        rotationSlider.value = 0
     }
     
     

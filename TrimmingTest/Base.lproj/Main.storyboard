@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qu-Ri-LxI">
-                                <rect key="frame" x="59" y="114" width="256" height="256"/>
+                                <rect key="frame" x="79" y="228" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="photoIcon"/>
                                 <connections>
@@ -27,13 +27,18 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Kh-a5-Yvg">
-                                <rect key="frame" x="59" y="341" width="256" height="256"/>
+                                <rect key="frame" x="79" y="368" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="cameraIcon"/>
                                 <connections>
                                     <segue destination="YF8-zd-1B1" kind="presentation" id="Loj-44-nKb"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m75-g0-rIJ">
+                                <rect key="frame" x="0.0" y="432" width="414" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -42,11 +47,12 @@
                     <connections>
                         <outlet property="callPhotoLibraryButton" destination="2Qu-Ri-LxI" id="qfz-SU-DPb"/>
                         <outlet property="cameraButton" destination="9Kh-a5-Yvg" id="bDj-jv-Arc"/>
+                        <outlet property="comingSoonView" destination="m75-g0-rIJ" id="yTN-Ib-mzK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055" y="546"/>
+            <point key="canvasLocation" x="1053.6231884057972" y="545.75892857142856"/>
         </scene>
         <!--Trimming-->
         <scene sceneID="Atq-2l-wNR">
@@ -56,18 +62,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HNb-pf-63a">
-                                <rect key="frame" x="0.0" y="616" width="375" height="51"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillProportionally" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="bqe-aU-fvN">
+                                <rect key="frame" x="10" y="760" width="467" height="89"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="awV-ur-5jf">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JoZ-Ot-kIA">
+                                        <rect key="frame" x="0.0" y="0.0" width="467" height="30"/>
+                                        <subviews>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7Ks-XZ-kO3">
+                                                <rect key="frame" x="-2" y="0.0" width="447" height="31"/>
+                                                <connections>
+                                                    <action selector="sliderValueChanged:" destination="3eP-Jv-h8I" eventType="valueChanged" id="E1c-xF-c6A"/>
+                                                </connections>
+                                            </slider>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEG-Jh-S0t">
+                                                <rect key="frame" x="443" y="0.0" width="24" height="30"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="redoIcon"/>
+                                                <connections>
+                                                    <action selector="undoButtonTapped:" destination="3eP-Jv-h8I" eventType="touchUpInside" id="ChJ-lE-BAO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HNb-pf-63a">
+                                        <rect key="frame" x="42" y="39" width="383" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="awV-ur-5jf">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells/>
+                                    </collectionView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="mZw-Tx-CPk"/>
@@ -86,11 +116,15 @@
                     </navigationItem>
                     <connections>
                         <outlet property="gridCollectionView" destination="HNb-pf-63a" id="ydI-ht-7Oi"/>
+                        <outlet property="rotationSlider" destination="7Ks-XZ-kO3" id="BCa-DX-R3H"/>
+                        <outlet property="settingHorizontalStackView" destination="JoZ-Ot-kIA" id="9Rd-Q9-2ZZ"/>
+                        <outlet property="settingStackView" destination="bqe-aU-fvN" id="3q7-VX-IQW"/>
+                        <outlet property="undoButton" destination="CEG-Jh-S0t" id="3PA-Tr-6hc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37E-17-oRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3032.8000000000002" y="124.58770614692655"/>
+            <point key="canvasLocation" x="3031.884057971015" y="124.55357142857142"/>
         </scene>
         <!--Preview-->
         <scene sceneID="8Mu-rK-PwQ">
@@ -260,7 +294,7 @@
                         <viewLayoutGuide key="safeArea" id="ZOr-Cl-Vso"/>
                     </view>
                     <navigationItem key="navigationItem" title="Camera" id="oXi-Z8-8vL">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="e8M-MB-02S">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="e8M-MB-02S">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="BEA-2V-jwx" id="7WN-FU-rU2"/>
                             </connections>
@@ -321,5 +355,6 @@
     <resources>
         <image name="cameraIcon" width="85.333335876464844" height="85.333335876464844"/>
         <image name="photoIcon" width="85.333335876464844" height="85.333335876464844"/>
+        <image name="redoIcon" width="24" height="24"/>
     </resources>
 </document>

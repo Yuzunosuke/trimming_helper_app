@@ -16,6 +16,8 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var callPhotoLibraryButton: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
 
+    @IBOutlet weak var comingSoonView: UIView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         configureNavigationBar()
         configureCallPhotoLibraryButton()
         configureCameraButton()
+        configureComingSoonView()
         
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        appDelegate.photoLibraryImage = nil
@@ -46,6 +49,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         callPhotoLibraryButton.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -16).isActive = true
         
         callPhotoLibraryButton.layer.borderColor = UIColor.white.cgColor
+        
     }
     
     private func configureCameraButton() {
@@ -56,6 +60,17 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         cameraButton.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 16).isActive = true
         
         cameraButton.layer.borderColor = UIColor.white.cgColor
+    }
+    
+    // カメラのトリミングがうまく行くまではこれで覆う
+    private func configureComingSoonView() {
+        comingSoonView.translatesAutoresizingMaskIntoConstraints = false
+        comingSoonView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        comingSoonView.heightAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        comingSoonView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        comingSoonView.centerYAnchor.constraint(equalTo: cameraButton.centerYAnchor).isActive = true
+        
+        comingSoonView.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 0.2)
     }
     
     private func configureNavigationBar() {

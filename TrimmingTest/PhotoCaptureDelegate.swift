@@ -65,24 +65,26 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
             photoData = photo.fileDataRepresentation()
             
             let image = UIImage(data: photoData!)
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.photoLibraryImage = image
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            appDelegate.photoLibraryImage = image
             
             // 以下のトリミングうまくいかない
-//            let screenSize = imageView.frame.width * 10 / 9
-//
-//            let cropRect: CGRect = CGRect(x: trimmingAreaView.frame.origin.x - imageView.frame.origin.x,
-//                                          y: trimmingAreaView.frame.origin.y - imageView.frame.origin.y,
-//                                          width: trimmingAreaView.frame.width,
-//                                          height: trimmingAreaView.frame.height)
-//
-//            print("### cropの範囲", cropRect)
-//            print("### gridViewの範囲", trimmingAreaView.frame)
-//
-//            if let trimmedImage = image?.trimming(to: cropRect, zoomedInOutScale: screenSize / image!.size.width)  {
-//                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                appDelegate.photoLibraryImage = trimmedImage
-//            }
+            // zoomedInOutScaleの値がうまくいかない？
+            // もしくはpreviewLayerのサイズが合ってないかも？
+            let screenWidth = imageView.frame.width * 10 / 9
+
+            let cropRect: CGRect = CGRect(x: trimmingAreaView.frame.origin.x - imageView.frame.origin.x,
+                                          y: trimmingAreaView.frame.origin.y - imageView.frame.origin.y,
+                                          width: trimmingAreaView.frame.width,
+                                          height: trimmingAreaView.frame.height)
+
+            print("### cropの範囲", cropRect)
+            print("### gridViewの範囲", trimmingAreaView.frame)
+
+            if let trimmedImage = image?.trimming(to: cropRect, zoomedInOutScale: screenWidth / image!.size.width)  {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.photoLibraryImage = trimmedImage
+            }
         }
     }
         

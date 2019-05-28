@@ -149,21 +149,16 @@ class CameraViewController: UIViewController {
     
     
     private func configurePreviewView() {
-//        previewView.videoPreviewLayer.frame = CGRect(x: 0,
-//                                                     y: 0,
-//                                                     width: view.frame.width * 0.9,
-//                                                     height: view.frame.width * 0.9 * 1.5)
-//            .with(center: CGPoint(x: self.view.center.x, y: self.view.center.y))
+        previewView.videoPreviewLayer.frame = CGRect(x: 0,
+                                                     y: 0,
+                                                     width: view.frame.width * 0.9 * 1.5 * 3 / 4,
+                                                     height: view.frame.width * 0.9 * 1.5)
         
         previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         
         previewView.translatesAutoresizingMaskIntoConstraints = false
-        previewView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9).isActive = true
+        previewView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5 * 3 / 4).isActive = true
         previewView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.9 * 1.5).isActive = true
-//        previewView.topAnchor.constraint(equalTo: gridView.topAnchor).isActive = true
-//        previewView.bottomAnchor.constraint(equalTo: gridView.bottomAnchor).isActive = true
-//        previewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        previewView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         previewView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         previewView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
@@ -236,8 +231,6 @@ class CameraViewController: UIViewController {
         gridCollectionView.leftAnchor.constraint(equalTo: shutterButton.rightAnchor, constant: 8).isActive = true
         gridCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -view.frame.width * 0.05).isActive = true
         gridCollectionView.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor).isActive = true
-        //        gridCollectionView.layer.borderColor = UIColor(red: 23/255, green: 23/255, blue: 23/255, alpha: 1).cgColor
-        //        gridCollectionView.layer.borderWidth = 1
     }
     
     private func configureIconArray() {
@@ -369,6 +362,7 @@ class CameraViewController: UIViewController {
     private var inProgressPhotoCaptureDelegates = [Int64: PhotoCaptureProcessor]()
     
     @IBOutlet weak var shutterButton: UIButton!
+    
     
     /// - Tag: CapturePhoto
     @IBAction func capturePhoto(_ sender: UIButton) {
