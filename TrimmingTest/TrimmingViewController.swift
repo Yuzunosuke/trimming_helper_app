@@ -63,11 +63,11 @@ class TrimmingViewController: UIViewController {
         configureNavigationBar()
         createGridView(imageName: iconNameArray[0])
         configureCollectionView()
+        configureSettingHorizontalStackView()
+        configureSettingStackView()
         configureIconArray()
         configureUndoButton()
         configureRotationSlider()
-        configureSettingHorizontalStackView()
-        configureSettingStackView()
         
         setUpPinchInOut()
         
@@ -227,55 +227,46 @@ class TrimmingViewController: UIViewController {
 //
         gridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         gridCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        gridCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        gridCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        gridCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        gridCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
         gridCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
     }
     
     private func configureUndoButton() {
         
-        undoButton.layer.borderWidth = 1.0
-        undoButton.layer.borderColor = UIColor.blue.cgColor
-        
         undoButton.backgroundColor = .clear
         
         undoButton.translatesAutoresizingMaskIntoConstraints = false
-        undoButton.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        undoButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        undoButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        undoButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
 //        undoButton.leftAnchor.constraint(equalTo: rotationSlider.rightAnchor, constant: 8).isActive = true
-        undoButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
-        undoButton.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
+//        undoButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+//        undoButton.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
     }
     
     // rotationSliderの設定
     private func configureRotationSlider() {
-        
-        rotationSlider.layer.borderWidth = 1.0
-        rotationSlider.layer.borderColor = UIColor.black.cgColor
         
 //        rotationSlider.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         rotationSlider.backgroundColor = .clear
         
 //        view.bringSubviewToFront(rotationSlider)
         
-        rotationSlider.minimumValue = -30
-        rotationSlider.maximumValue = 30
+        rotationSlider.minimumValue = -20
+        rotationSlider.maximumValue = 20
         
         rotationSlider.setValue(0, animated: false)
         
         rotationSlider.translatesAutoresizingMaskIntoConstraints = false
         rotationSlider.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        rotationSlider.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
-        rotationSlider.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -76).isActive = true
-        rotationSlider.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
+//        rotationSlider.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+//        rotationSlider.rightAnchor.constraint(equalTo: undoButton.leftAnchor, constant: -8).isActive = true
+//        rotationSlider.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
     }
     
     
     private func configureSettingStackView() {
-        
-        settingStackView.layer.borderWidth = 1.0
-        settingStackView.layer.borderColor = UIColor.red.cgColor
         
 //        settingStackView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         settingStackView.backgroundColor = .black
@@ -283,21 +274,18 @@ class TrimmingViewController: UIViewController {
         view.bringSubviewToFront(settingStackView)
         
         settingStackView.alignment = .center
-        settingStackView.distribution = .fillProportionally
+//        settingStackView.distribution = .fillProportionally
+        settingStackView.distribution = .fillEqually
         settingStackView.spacing = 0
         
         settingStackView.translatesAutoresizingMaskIntoConstraints = false
-        settingStackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        settingStackView.heightAnchor.constraint(equalToConstant: 136).isActive = true
         settingStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        settingStackView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        settingStackView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        settingStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        settingStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
     }
     
     private func configureSettingHorizontalStackView() {
-        
-        settingHorizontalStackView.layer.borderWidth = 1.0
-        settingHorizontalStackView.layer.borderColor = UIColor.red.cgColor
-        
         view.bringSubviewToFront(settingHorizontalStackView)
         
         settingHorizontalStackView.alignment = .center
@@ -305,10 +293,10 @@ class TrimmingViewController: UIViewController {
         settingHorizontalStackView.spacing = 0
         
         settingHorizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-        settingHorizontalStackView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        settingHorizontalStackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         settingHorizontalStackView.bottomAnchor.constraint(equalTo: gridCollectionView.topAnchor).isActive = true
-        settingHorizontalStackView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        settingHorizontalStackView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        settingHorizontalStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        settingHorizontalStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
     }
     
     // gridのアイコンの画像を格納する配列の設定
